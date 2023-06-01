@@ -9,11 +9,16 @@ export const routes: Route[] = [
       children: [
         {
             path: Paths.SIGN_IN,
-            loadChildren: () => import('./../components/auth/sign-in/sign-in.component').then(c => c.SignInComponent)
+            loadComponent: () => import('./../components/auth/sign-in/sign-in.component').then(c => c.SignInComponent)
         },
         {
             path: Paths.SIGN_UP,
-            loadChildren: () => import('./../components/auth/sign-up/sign-up.component').then(c => c.SignUpComponent)
+            loadComponent: () => import('./../components/auth/sign-up/sign-up.component').then(c => c.SignUpComponent)
+        },
+        {
+          path: '',
+          redirectTo: Paths.SIGN_IN,
+          pathMatch: 'full'
         }
       ]
     },

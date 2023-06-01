@@ -33,6 +33,6 @@ When('I click to the sign up button', () => {
 
 })
 
-Then('I should be display a message with {expectedMessage}', (expectedMessage) => {
+Then('I should be display a message with {}', (expectedMessage) => {
 
 })
