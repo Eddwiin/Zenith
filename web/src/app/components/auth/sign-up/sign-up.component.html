@@ -1,1 +1,33 @@
-<p>sign-up works!</p>
+<form [formGroup]="signUpFB" (ngSubmit)="onSubmit()">
+    <div>
+        <label>First Name</label>
+        <input data-cy='sign-up-firstname' type="text" [formControl]="firstNameCtrl" />
+        <span *ngIf="firstNameCtrl.touched && firstNameCtrl.errors?.['required']">The first name is required</span>
+    </div>
+
+    <div>
+        <label>Last Name</label>
+        <input data-cy='sign-up-lastName' type="text" [formControl]="lastNameCtrl" />
+        <span *ngIf="lastNameCtrl.touched && lastNameCtrl.errors?.['required']">The last name is required</span>
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input data-cy='sign-up-email' type="email" [formControl]="emailCtrl" />
+        <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">The email is required</span>
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input data-cy='sign-up-password' type="password" [formControl]="passwordCtrl" />
+        <span *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['required']">The password is required</span>
+    </div>
+
+    <div>
+        <label>Confirmation password</label>
+        <input data-cy='sign-up-confirmPassword' type="password" [formControl]="confirmPasswordCtrl" />
+        <span *ngIf="confirmPasswordCtrl.touched && confirmPasswordCtrl.errors?.['required']">The confirmation password is required</span>
+    </div>
+
+    <button data-cy="sign-up-submit" type="submit">Envoyer</button>
+</form>

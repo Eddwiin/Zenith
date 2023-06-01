@@ -11,5 +11,9 @@ Feature: Zenith - Sign up
         Then I should be display a message with <expectedMessage>
 
         Examples:
-            | firstName | lastName | email            | password   | confirmPassword | expectedMessage |
-            | John      | Doe      | john.doe@test.fr | Azerty123! | Azerty123!      | Account created |
+            | firstName | lastName | email            | password   | confirmPassword | expectedMessage                       |
+            |           | Doe      | john.doe@test.fr | Azerty123! | Azerty123!      | The first name is required            |
+            | John      |          | john.doe@test.fr | Azerty123! | Azerty123!      | The last name is required             |
+            | John      | Doe      |                  | Azerty123! | Azerty123!      | The email is required                 |
+            | John      | Doe      | john.doe@test.fr |            | Azerty123!      | The password is required              |
+            | John      | Doe      | john.doe@test.fr | Azerty123! |                 | The confirmation password is required |
