@@ -2,31 +2,41 @@
     <div>
         <label>First Name</label>
         <input data-cy='sign-up-firstname' type="text" [formControl]="firstNameCtrl" />
-        <span *ngIf="firstNameCtrl.touched && firstNameCtrl.errors?.['required']">The first name is required</span>
+        <span *ngIf="firstNameCtrl.touched && firstNameCtrl.errors?.['required']">First name is required</span>
+        <span *ngIf="firstNameCtrl.touched && firstNameCtrl.errors?.['minlength']">First name must contain more than one letter</span>
+
     </div>
 
     <div>
         <label>Last Name</label>
         <input data-cy='sign-up-lastName' type="text" [formControl]="lastNameCtrl" />
-        <span *ngIf="lastNameCtrl.touched && lastNameCtrl.errors?.['required']">The last name is required</span>
+        <span *ngIf="lastNameCtrl.touched && lastNameCtrl.errors?.['required']">Last name is required</span>
+        <span *ngIf="lastNameCtrl.touched && lastNameCtrl.errors?.['minlength']">Last name must contain more than one letter</span>
     </div>
 
     <div>
         <label>Email</label>
         <input data-cy='sign-up-email' type="email" [formControl]="emailCtrl" />
-        <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">The email is required</span>
+        <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">Email is required</span>
+        <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['emailInvalid']">Email is invalid</span>
     </div>
 
     <div>
         <label>Password</label>
         <input data-cy='sign-up-password' type="password" [formControl]="passwordCtrl" />
-        <span *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['required']">The password is required</span>
+        <span *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['required']">Password is required</span>
+        <span *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['passwordInvalid']">Password is invalid</span>
+
     </div>
 
     <div>
         <label>Confirmation password</label>
         <input data-cy='sign-up-confirmPassword' type="password" [formControl]="confirmPasswordCtrl" />
-        <span *ngIf="confirmPasswordCtrl.touched && confirmPasswordCtrl.errors?.['required']">The confirmation password is required</span>
+        <span *ngIf="confirmPasswordCtrl.touched && confirmPasswordCtrl.errors?.['required']">Confirmation password is required</span>
+        <span *ngIf="confirmPasswordCtrl.touched && confirmPasswordCtrl.errors?.['passwordInvalid']">Password is invalid</span>
+        <span *ngIf="signUpFB.errors?.['passwordIsNotSame']">Password and confirm password are not the same</span>
+
+
     </div>
 
     <button data-cy="sign-up-submit" type="submit">Envoyer</button>

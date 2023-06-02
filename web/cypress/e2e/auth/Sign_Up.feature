@@ -11,9 +11,17 @@ Feature: Zenith - Sign up
         Then I should be display a message with <expectedMessage>
 
         Examples:
-            | firstName | lastName | email            | password   | confirmPassword | expectedMessage                       |
-            |           | Doe      | john.doe@test.fr | Azerty123! | Azerty123!      | The first name is required            |
-            | John      |          | john.doe@test.fr | Azerty123! | Azerty123!      | The last name is required             |
-            | John      | Doe      |                  | Azerty123! | Azerty123!      | The email is required                 |
-            | John      | Doe      | john.doe@test.fr |            | Azerty123!      | The password is required              |
-            | John      | Doe      | john.doe@test.fr | Azerty123! |                 | The confirmation password is required |
+            | firstName | lastName | email                | password  | confirmPassword | expectedMessage                                |
+            # | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123      | Account created                                |
+            |           | Doe      | john.doe@test.fr     | Azerty123 | Azerty123       | First name is required                         |
+            | John      |          | john.doe@test.fr     | Azerty123 | Azerty123       | Last name is required                          |
+            | John      | Doe      |                      | Azerty123 | Azerty123       | Email is required                              |
+            | John      | Doe      | john.doe@test.fr     |           | Azerty123       | Password is required                           |
+            | John      | Doe      | john.doe@test.fr     | Azerty123 |                 | Confirmation password is required              |
+            | J         | Doe      | john.doe@test.fr     | Azerty123 | Azerty123       | First name must contain more than one letter   |
+            | John      | D        | john.doe@test.fr     | Azerty123 | Azerty123       | Last name must contain more than one letter    |
+            | John      | Doe      | john.doetest.fr      | Azerty123 | Azerty123       | Email is invalid                               |
+            | John      | Doe      | john.doetest@test    | Azerty123 | Azerty123       | Email is invalid                               |
+            | John      | Doe      | john.doetest@test.fr | Azerty!   | Azerty!         | Password is invalid                            |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty          | Password is invalid                            |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty12323     | Password and confirm password are not the same |
