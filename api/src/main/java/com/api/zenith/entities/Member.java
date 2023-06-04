@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Member {
-
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
@@ -46,6 +45,14 @@ public class Member {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean changePassword(String oldPassword, String newPassword) {
+        return true;
+    }
+
+    public boolean verifyPassword(String password) {
+        return true;
     }
 
     @Override
