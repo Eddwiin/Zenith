@@ -3,9 +3,8 @@ package com.zenith.api.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "member")
-public class Member{
-
+@Table(name = "conversation")
+public class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
