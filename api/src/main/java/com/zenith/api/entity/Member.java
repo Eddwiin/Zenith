@@ -1,7 +1,17 @@
 package com.zenith.api.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "member")
 public class Member{
@@ -23,7 +33,11 @@ public class Member{
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "member_conversation_id")
-    private Conversation conversations;
+    @ManyToMany
+    @JoinTable(
+            name = "member_conversations",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+    )
+    private List<Conversation> conversations;
 }

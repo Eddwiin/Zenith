@@ -19,4 +19,8 @@ public class Message {
 
     @Column(name = "last_modified")
     private Date lastModified;
+
+    @ManyToOne
+    @JoinColumn(name="conversation_id", nullable = false)
+    private Conversation conversation;
 }

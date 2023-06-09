@@ -20,5 +20,7 @@ public class Post {
     @Column(name = "last_modified")
     private Date lastModified;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "post")
+    private Conversation conversation;
 
 }
