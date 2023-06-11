@@ -1,9 +1,10 @@
 package com.zenith.api.service;
 
 import com.zenith.api.entity.Member;
+import com.zenith.api.exception.email.EmailIsEmptyException;
 
 public interface MemberService {
-    void saveMember(Member member);
+    Member saveMember(Member member);
 
-    Member findMemberByEmail(String email);
+    Member findMemberByEmail(String email) throws EmailIsEmptyException;
 }
