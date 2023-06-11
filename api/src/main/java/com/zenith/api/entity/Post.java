@@ -6,21 +6,21 @@ import java.util.Date;
 
 @Entity
 @Table(name = "post")
-public class Post {
+public record Post (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    Integer id,
 
     @Column(name = "message")
-    private String message;
+    String message,
+
     @Column(name = "date")
-    private Date date;
+    Date date,
 
     @Column(name = "last_modified")
-    private Date lastModified;
+    Date lastModified,
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "post")
-    private Conversation conversation;
-
-}
+    Conversation conversation
+) { }

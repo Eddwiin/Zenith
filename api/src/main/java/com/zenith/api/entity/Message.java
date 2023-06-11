@@ -6,21 +6,22 @@ import java.util.Date;
 
 @Entity
 @Table(name = "message")
-public class Message {
+public record Message (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    Integer id,
 
     @Column(name = "message")
-    private String message;
+    String message,
+
     @Column(name = "date")
-    private Date date;
+    Date date,
 
     @Column(name = "last_modified")
-    private Date lastModified;
+    Date lastModified,
 
     @ManyToOne
     @JoinColumn(name="conversation_id", nullable = false)
-    private Conversation conversation;
-}
+    Conversation conversation
+) { }

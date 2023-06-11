@@ -1,31 +1,29 @@
 package com.zenith.api.dto;
 
+import com.zenith.api.entity.Conversation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class MemberDto {
-    private int id;
-    @NotEmpty
-    @Size(min = 2, message = "First name must be greater than 2 letter")
-    private String firstName;
+import java.util.List;
 
-    @NotEmpty
-    @Size(min = 2, message = "First name must be greater than 2 letter")
-    private String lastName;
+public record MemberDto (
+        Integer id,
 
-    @NotEmpty(message = "Email should not be empty")
-    @Email
-    private String email;
+        @NotEmpty
+        @Size(min = 2, message = "First name must be greater than 2 letter")
+         String firstName,
 
-    @NotEmpty(message = "Password should not be empty")
-    private String password;
-}
+        @NotEmpty
+        @Size(min = 2, message = "First name must be greater than 2 letter")
+        String lastName,
+
+        @NotEmpty(message = "Email should not be empty")
+        @Email
+        String email,
+
+        @NotEmpty(message = "Password should not be empty")
+        String password,
+
+        List<Conversation> conversations
+) { }
