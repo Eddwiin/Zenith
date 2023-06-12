@@ -1,8 +1,12 @@
 package com.zenith.api.service;
 
 import com.zenith.api.entity.Member;
-import com.zenith.api.exception.email.EmailIsEmptyException;
+import com.zenith.api.exception.SaveMemberArgsIncorrectException;
+import com.zenith.api.exception.email.EmailEmptyException;
+import com.zenith.api.exception.email.EmailExistException;
 import com.zenith.api.repository.MemberRepository;
+import com.zenith.api.validator.MemberValidator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,23 +14,37 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class MemberImplServiceTest {
     @Mock private MemberRepository memberRepositoryTest;
+    @Mock  private MemberValidator memberValidatorTest;
     private MemberService memberServiceTest;
+    private Member member;
 
     @BeforeEach
     void setUp() {
         memberServiceTest = new MemberImplService(memberRepositoryTest);
+        member = new Member("John", "Doe", "john.doe@test.fr", "azerty123", new ArrayList<>());
+    }
+
+    @AfterEach
+    void tearDown() {
+        memberRepositoryTest.deleteAll();
     }
 
     @Test
-    void itShouldCallFindByEmailFromMemberRepository() throws EmailIsEmptyException {
+    void itShouldCallFindByEmailFromMemberRepository() throws EmailEmptyException {
         String email = "mock@test.fr";
         memberServiceTest.findMemberByEmail(email);
 
@@ -36,22 +54,21 @@ class MemberImplServiceTest {
     @Test
     void willThrowWhenEmailIsNull() {
         assertThatThrownBy(() -> memberServiceTest.findMemberByEmail(null))
-                .isInstanceOf(EmailIsEmptyException.class)
+                .isInstanceOf(EmailEmptyException.class)
                 .hasMessageContaining("Email is empty");
         verify(memberRepositoryTest, never()).findByEmail(null);
     }
 
     @Test
-    void willThrowWhenEmailIsEmpty() {
+    void itShouldThrowWhenEmailIsEmpty() {
         assertThatThrownBy(() -> memberServiceTest.findMemberByEmail(""))
-                .isInstanceOf(EmailIsEmptyException.class)
+                .isInstanceOf(EmailEmptyException.class)
                 .hasMessageContaining("Email is empty");
         verify(memberRepositoryTest, never()).findByEmail("");
     }
 
     @Test
-    void itShouldSaveMember() {
-        Member member = new Member("John", "Doe", "john.doe@test.fr", "azerty123", null);
+    void itShouldSaveMember() throws EmailExistException, SaveMemberArgsIncorrectException{
         memberServiceTest.saveMember(member);
 
         ArgumentCaptor<Member> memberArgumentCaptor = ArgumentCaptor.forClass(Member.class);
@@ -62,45 +79,26 @@ class MemberImplServiceTest {
 
     }
 
-//    @Test
-//    @Disabled
-//    void saveMember() {
-//        Member member = new Member("John", "Doe", "john.doe@test.fr", "azerty123", null);
-//        memberServiceTest.saveMember(member);
-//
-//        ArgumentCaptor<Member> memberArgumentCaptor = ArgumentCaptor.forClass(Member.class);
-//        verify(memberRepositoryTest).save(memberArgumentCaptor.capture());
-//
-//        Member capturedMember = memberArgumentCaptor.getValue();
-//        assertThat(capturedMember).isEqualTo(member);
-//    }
-//
-//    @Test
-//    void itShouldCallFindByEmailFromMemberRepository() {
-//        String email = "mock@test.fr";
-//        memberServiceTest.findMemberByEmail(email);
-//
-//        verify(memberRepositoryTest).findByEmail(email);
-//    }
-//
-//    @Test
-//    @Disabled
-//    void itShouldReturnFalseWhenEmailIsNotFound() {
-//        Member member = new Member("John", "Doe", "john.doe@test.fr", "azerty123", null);
-//
-//        given(memberRepositoryTest.findByEmail(member.email())).willReturn(new Member());
-//
-//        assertThatThrownBy(() -> memberServiceTest.saveMember(member))
-//                .isInstanceOf(BadRequestException.class)
-//                .hasMessageContaining("Email " + member.email() + " taken");
-//
-//        verify(memberRepositoryTest, never()).save(any());
-//    }
-//
-//    @Test
-//    @Disabled
-//    void willThrowWhenEmailIsTaken() {
-//
-//    }
+    @Test
+    void itShouldThrowWhenUserExistOnSave() {
+        given(memberRepositoryTest.findByEmail(anyString())).willReturn(Optional.of(new Member()));
+
+        assertThatThrownBy(() ->  memberServiceTest.saveMember(member))
+                .isInstanceOf(EmailExistException.class)
+                .hasMessageContaining(("Email is taken : " + member.email()));
+
+        verify(memberRepositoryTest, never()).save(any());
+    }
+
+    @Test
+    void itShouldThrowWhenArgsOfSaveMemberIsIncorrect() {
+        given(memberRepositoryTest.findByEmail(anyString())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> memberServiceTest.saveMember(member))
+                .isInstanceOf(SaveMemberArgsIncorrectException.class)
+                .hasMessageContaining("Args is incorrect");
+
+        verify(memberRepositoryTest,never()).save(any());
+    }
 
 }

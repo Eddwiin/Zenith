@@ -1,6 +1,7 @@
 package com.zenith.api.exception;
 
-import com.zenith.api.exception.email.EmailIsEmptyException;
+import com.zenith.api.exception.email.EmailEmptyException;
+import com.zenith.api.exception.email.EmailExistException;
 import com.zenith.api.exception.email.EmailNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,26 @@ public class DefaultExceptionHandler {
         return new ResponseEntity<>(apiError, errorStatus);
     }
 
-    @ExceptionHandler(EmailIsEmptyException.class)
-    public ResponseEntity<ApiError> handleException(EmailIsEmptyException e, HttpServletRequest request) {
+    @ExceptionHandler(EmailEmptyException.class)
+    public ResponseEntity<ApiError> handleException(EmailEmptyException e, HttpServletRequest request) {
         HttpStatus errorStatus = HttpStatus.BAD_REQUEST;
         ApiError apiError = configureApiError(e, request, errorStatus);
+
+        return new ResponseEntity<>(apiError, errorStatus);
+    }
+
+    @ExceptionHandler(EmailExistException.class)
+    public ResponseEntity<ApiError> handleException(EmailExistException e, HttpServletRequest request) {
+        HttpStatus errorStatus = HttpStatus.FORBIDDEN;
+        ApiError apiError = this.configureApiError(e, request, errorStatus);
+
+        return new ResponseEntity<>(apiError, errorStatus);
+    }
+
+    @ExceptionHandler(SaveMemberArgsIncorrectException.class)
+    public ResponseEntity<ApiError> handleException(SaveMemberArgsIncorrectException e, HttpServletRequest request) {
+        HttpStatus errorStatus = HttpStatus.BAD_REQUEST;
+        ApiError apiError = this.configureApiError(e, request, errorStatus);
 
         return new ResponseEntity<>(apiError, errorStatus);
     }

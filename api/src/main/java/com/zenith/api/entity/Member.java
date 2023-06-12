@@ -1,7 +1,10 @@
 package com.zenith.api.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,18 +15,25 @@ public record Member(
         @Column(name = "id")
         Integer id,
 
+        @NonNull
+        @Size(min = 2)
         @Column(name = "first_name")
         String firstName,
 
+        @NonNull
+        @Size(min = 2)
         @Column(name = "last_name")
         String lastName,
 
+        @NonNull
         @Column(name = "email")
         String email,
 
+        @NonNull
         @Column(name = "password")
         String password,
 
+        @NonNull
         @ManyToMany
         @JoinTable(
                 name = "member_conversations",
@@ -33,7 +43,7 @@ public record Member(
         List<Conversation> conversations
 ) {
     public Member() {
-        this(null, null, null, null,null,null);
+        this(null, "", "", "", "", new ArrayList<>());
     }
     public Member(String firstName, String lastName, String email, String password, List<Conversation> conversation) {
         this( null, firstName,lastName, email, password, conversation);
