@@ -4,7 +4,6 @@ import com.zenith.api.dto.MemberDTO;
 import com.zenith.api.dto.mapper.FoundMemberDTOMapper;
 import com.zenith.api.dto.mapper.SavedMemberDTOMapper;
 import com.zenith.api.entity.Member;
-import com.zenith.api.exception.SaveMemberArgsIncorrectException;
 import com.zenith.api.exception.email.EmailEmptyException;
 import com.zenith.api.exception.email.EmailExistException;
 import com.zenith.api.repository.MemberRepository;
@@ -21,7 +20,7 @@ public class MemberImplService implements MemberService {
     }
 
     @Override
-    public MemberDTO saveMember(Member member) throws EmailExistException, SaveMemberArgsIncorrectException {
+    public MemberDTO saveMember(Member member) throws EmailExistException {
         Optional<Member> isMemberExist = memberRepository.findByEmail(member.getEmail());
 
         if(isMemberExist.isPresent()) {
