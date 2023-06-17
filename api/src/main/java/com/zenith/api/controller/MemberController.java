@@ -1,5 +1,6 @@
 package com.zenith.api.controller;
 
+import com.zenith.api.dto.MemberDTO;
 import com.zenith.api.entity.Member;
 import com.zenith.api.exception.SaveMemberArgsIncorrectException;
 import com.zenith.api.exception.email.EmailExistException;
@@ -21,8 +22,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveMember(@RequestBody Member member) throws EmailExistException, SaveMemberArgsIncorrectException {
-        memberService.saveMember(member);
-        return ResponseEntity.ok("Membre enregistré !");
+    public ResponseEntity<MemberDTO> saveMember(@RequestBody Member member) throws EmailExistException, SaveMemberArgsIncorrectException {
+        return ResponseEntity.ok( memberService.saveMember(member));
     }
 }

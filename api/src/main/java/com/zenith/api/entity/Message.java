@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name = "message")
 public record Message (
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     Integer id,
 

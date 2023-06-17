@@ -5,7 +5,6 @@ import com.zenith.api.exception.SaveMemberArgsIncorrectException;
 import com.zenith.api.exception.email.EmailEmptyException;
 import com.zenith.api.exception.email.EmailExistException;
 import com.zenith.api.repository.MemberRepository;
-import com.zenith.api.validator.MemberValidator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,14 +26,14 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class MemberImplServiceTest {
     @Mock private MemberRepository memberRepositoryTest;
-    @Mock  private MemberValidator memberValidatorTest;
+
     private MemberService memberServiceTest;
     private Member member;
 
     @BeforeEach
     void setUp() {
         memberServiceTest = new MemberImplService(memberRepositoryTest);
-        member = new Member("John", "Doe", "john.doe@test.fr", "azerty123", new ArrayList<>());
+        member = new Member("John", "Doe", "john.doe@test.fr", "azerty123");
     }
 
     @AfterEach
@@ -85,7 +83,7 @@ class MemberImplServiceTest {
 
         assertThatThrownBy(() ->  memberServiceTest.saveMember(member))
                 .isInstanceOf(EmailExistException.class)
-                .hasMessageContaining(("Email is taken : " + member.email()));
+                .hasMessageContaining(("Email is taken : " + member.getEmail()));
 
         verify(memberRepositoryTest, never()).save(any());
     }
