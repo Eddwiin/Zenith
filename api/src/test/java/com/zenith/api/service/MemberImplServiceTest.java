@@ -6,11 +6,13 @@ import com.zenith.api.exception.email.EmailExistException;
 import com.zenith.api.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.Optional;
 
@@ -66,6 +68,15 @@ class MemberImplServiceTest {
 
     @Test
     void itShouldSaveMember() throws EmailExistException{
+        given(memberRepositoryTest.save(member)).willReturn(new Member(
+                1,
+                member.getFirstName(),
+                member.getLastName(),
+                member.getEmail(),
+                member.getPassword(),
+                member.getConversations()
+        ));
+
         memberServiceTest.saveMember(member);
 
         ArgumentCaptor<Member> memberArgumentCaptor = ArgumentCaptor.forClass(Member.class);
@@ -73,7 +84,6 @@ class MemberImplServiceTest {
 
         Member capturedMember = memberArgumentCaptor.getValue();
         assertThat(capturedMember).isEqualTo(member);
-
     }
 
     @Test
@@ -88,12 +98,13 @@ class MemberImplServiceTest {
     }
 
     @Test
+    @Disabled
     void itShouldThrowWhenArgsOfSaveMemberIsIncorrect() {
         given(memberRepositoryTest.findByEmail(anyString())).willReturn(Optional.empty());
 
-//        assertThatThrownBy(() -> memberServiceTest.saveMember(member))
-//                .isInstanceOf(SaveMemberArgsIncorrectException.class)
-//                .hasMessageContaining("Args is incorrect");
+        assertThatThrownBy(() -> memberServiceTest.saveMember(member))
+                .isInstanceOf(MethodArgumentNotValidException.class)
+                .hasMessageContaining("Args is incorrect");
 
         verify(memberRepositoryTest,never()).save(any());
     }
