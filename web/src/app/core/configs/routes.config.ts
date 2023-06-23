@@ -1,6 +1,6 @@
 import { Route } from "@angular/router";
-import { AuthComponent } from "../components/auth/auth.component";
-import { Paths } from "../shared/enums/path.enum";
+import { AuthComponent } from "../../components/auth/auth.component";
+import { Paths } from "../../shared/enums/path.enum";
 
 export const routes: Route[] = [
     {
@@ -9,11 +9,11 @@ export const routes: Route[] = [
       children: [
         {
             path: Paths.SIGN_IN,
-            loadComponent: () => import('./../components/auth/sign-in/sign-in.component').then(c => c.SignInComponent)
+            loadComponent: () => import('../../components/auth/sign-in/sign-in.component').then(c => c.SignInComponent)
         },
         {
             path: Paths.SIGN_UP,
-            loadComponent: () => import('./../components/auth/sign-up/sign-up.component').then(c => c.SignUpComponent)
+            loadComponent: () => import('../../components/auth/sign-up/sign-up.component').then(c => c.SignUpComponent)
         },
         {
           path: '',

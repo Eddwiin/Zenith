@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { START_SAVE_MEMBER, SaveMember } from 'src/app/core/store/actions/auth/auth.action';
+import { AppState } from 'src/app/core/store/reducers/app.states';
 import { AuthValidatorService } from 'src/app/shared/utils/validators/auth-validator.service';
 
 enum SignUpKeyForm {
@@ -27,6 +30,8 @@ interface ISignUp {
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
+  store = inject(Store<AppState>);
+
   firstNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
   lastNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
   emailCtrl = new FormControl('', [Validators.required, AuthValidatorService.emailValidator()]);
@@ -44,6 +49,13 @@ export class SignUpComponent {
   });
 
   onSubmit() {
-    console.log("singYP", this.signUpFB.errors)
+    const saveMember: SaveMember = {
+      firstName: this.firstNameCtrl.value as string,
+      lastName: this.lastNameCtrl.value as string,
+      email: this.emailCtrl.value as string,
+      password: this.passwordCtrl.value as string
+    }
+
+    this.store.dispatch(START_SAVE_MEMBER({ payload: saveMember}));
   }
 }
