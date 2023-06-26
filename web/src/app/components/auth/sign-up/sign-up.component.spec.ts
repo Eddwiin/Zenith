@@ -118,4 +118,11 @@ describe('SignUpComponent', () => {
       expect(component.signUpFB.errors).toEqual(expectedRes);
     })
   })
+
+  describe("onSubmit", () => {
+
+    it("should redirect to login page with successful message", () => {
+      
+    });
+  });
 });

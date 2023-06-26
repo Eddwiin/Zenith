@@ -11,7 +11,6 @@ export class AuthService {
   apiConfigToken = inject(API_BASE_URL);
 
   saveMember(saveMember: SaveMember) {
-    console.log("apiConfigToken", this.apiConfigToken);
-    return this.http.post(`${this.apiConfigToken}/member/saveMember`, saveMember)
+    return this.http.post(`${this.apiConfigToken}/member`, saveMember)
   }
 }
