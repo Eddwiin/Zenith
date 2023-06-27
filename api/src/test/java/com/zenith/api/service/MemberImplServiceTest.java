@@ -71,7 +71,6 @@ class MemberImplServiceTest {
                 member.getFirstName(),
                 member.getLastName(),
                 member.getEmail(),
-                member.getPassword(),
                 member.getConversations()
         ));
 

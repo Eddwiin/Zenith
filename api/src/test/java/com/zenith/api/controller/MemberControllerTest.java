@@ -38,7 +38,6 @@ class MemberControllerTest {
                 mockMemberToSave.getFirstName(),
                 mockMemberToSave.getLastName(),
                 mockMemberToSave.getEmail(),
-                mockMemberToSave.getPassword(),
                 mockMemberToSave.getConversations()
         ));
 
