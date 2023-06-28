@@ -1,7 +1,7 @@
 package com.zenith.api.exception.email;
 
 public class EmailNotFoundException extends Exception {
-    EmailNotFoundException(String message) {
+    public EmailNotFoundException(String message) {
         super(message);
     }
 
