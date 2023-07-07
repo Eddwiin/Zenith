@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Validators } from '@angular/forms';
 import { SignUpComponent } from './sign-up.component';
+
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -121,7 +121,7 @@ describe('SignUpComponent', () => {
 
   describe("onSubmit", () => {
 
-    it("should redirect to login page with successful message", () => {
+    it("should return an error message when user has not been saved", () => {
       
     });
   });

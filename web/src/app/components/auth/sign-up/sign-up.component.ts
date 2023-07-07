@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { START_SAVE_MEMBER, SaveMember } from 'src/app/core/store/actions/auth/auth.action';
-import { AppState } from 'src/app/core/store/reducers/app.states';
+import { SaveMember, START_SAVE_MEMBER } from 'src/app/core/store/actions/auth/auth.action';
 import { AuthValidatorService } from 'src/app/shared/utils/validators/auth-validator.service';
 
 enum SignUpKeyForm {
@@ -30,7 +29,7 @@ interface ISignUp {
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
-  store = inject(Store<AppState>);
+  store = inject(Store);
 
   firstNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
   lastNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
