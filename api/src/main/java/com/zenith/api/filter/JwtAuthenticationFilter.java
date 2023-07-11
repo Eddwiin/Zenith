@@ -1,5 +1,6 @@
-package com.zenith.api.config;
+package com.zenith.api.filter;
 
+import com.zenith.api.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

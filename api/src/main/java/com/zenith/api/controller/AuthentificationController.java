@@ -2,6 +2,7 @@ package com.zenith.api.controller;
 
 import com.zenith.api.request.AuthenticationRequest;
 import com.zenith.api.request.RegisterRequest;
+import com.zenith.api.response.AuthenticationResponse;
 import com.zenith.api.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

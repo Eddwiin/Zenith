@@ -1,4 +1,4 @@
-package com.zenith.api.controller;
+package com.zenith.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

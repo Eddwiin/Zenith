@@ -1,4 +1,4 @@
-package com.zenith.api.config;
+package com.zenith.api.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

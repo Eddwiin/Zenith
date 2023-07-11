@@ -1,7 +1,6 @@
 package com.zenith.api.service;
 
-import com.zenith.api.config.JwtService;
-import com.zenith.api.controller.AuthenticationResponse;
+import com.zenith.api.response.AuthenticationResponse;
 import com.zenith.api.entity.Member;
 import com.zenith.api.repository.MemberRepository;
 import com.zenith.api.request.AuthenticationRequest;
