@@ -15,8 +15,8 @@ public record Post (
     @Column(name = "message")
     String message,
 
-    @Column(name = "date")
-    Date date,
+    @Column(name = "create_at")
+    Date createAt,
 
     @Column(name = "last_modified")
     Date lastModified,
