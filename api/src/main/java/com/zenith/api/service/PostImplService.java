@@ -5,12 +5,14 @@ import com.zenith.api.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostImplService implements PostService {
     private final PostRepository postRepository;
     @Override
-    public PostDTO getLastPostAdded() {
-        return null;
+    public List<PostDTO> getByLastCreateAt() {
+        return postRepository.getByLastCreateAt();
     }
 }
