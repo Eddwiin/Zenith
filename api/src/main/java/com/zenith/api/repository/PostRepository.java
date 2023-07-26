@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    @Query("SELECT p FROM Post p ORDER BY p.createAt DESC")
+    @Query("SELECT p FROM Post p ORDER BY p.createAt DESC LIMIT 5")
     List<PostDTO> getByLastCreateAt();
 }
