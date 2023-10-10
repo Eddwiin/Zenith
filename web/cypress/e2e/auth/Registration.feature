@@ -1,14 +1,15 @@
-@auth @signUp
-Feature: Zenith - Sign Up
+@auth @registration
+Feature: Zenith - Registration
 
-    Scenario Outline: Successful & Unsucessful sign up
-        Given I navigate to sign up page
-        And I type a first name with <firstName>
-        And I type a last name with <lastName>
-        And I type an email with <email>
-        And I type a password with <password>
-        And I type a confirmation password with <confirmationPassword>
-        Then I should display a message with <expectedMessage>
+    Scenario Outline: Successful & Unsucessful registration
+        Given I navigate to registration page - Registration
+        And I type a first name with <firstName> - Registration
+        And I type a last name with <lastName> - Registration
+        And I type an email with <email> - Registration
+        And I type a password with <password> - Registration
+        And I type a confirmation password with <confirmationPassword> - Registration
+        And I click on submit button - Registration
+        Then I should display a message with <expectedMessage> - Registration
 
         Examples:
             | firstName | lastName | email                | password  | confirmationPassword | expectedMessage                                |
