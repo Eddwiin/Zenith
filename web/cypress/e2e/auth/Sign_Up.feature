@@ -1,7 +1,8 @@
+@auth @signUp
 Feature: Zenith - Sign Up
 
-    Scenario: Successful & Unsucessful sign up
-        Given I navigate to the sign up page
+    Scenario Outline: Successful & Unsucessful sign up
+        Given I navigate to sign up page
         And I type a first name with <firstName>
         And I type a last name with <lastName>
         And I type an email with <email>

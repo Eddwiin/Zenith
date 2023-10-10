@@ -1,6 +1,6 @@
 const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
 
-Given('I navigate to the sign up page', () => {})
+Given('I navigate to sign up page', () => {})
 
 When('I type a first name with {}', (firstName) => {})
 
