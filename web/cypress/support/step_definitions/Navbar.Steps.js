@@ -7,7 +7,7 @@ When('I am authenticated - Logout Button', () => {})
 
 When('I click on logout button - Logout Button', () => {})
 
-Then('I am redirect to <urlToRedirect> with <message>- Logout Button', (urlToRedirect, message) => {})
+Then('I am redirect to {} with {} - Logout Button', (urlToRedirect, message) => {})
 
 
 // Notification button
@@ -17,7 +17,7 @@ When('I am authenticated - Notification button', () => {})
 
 When('I have new notification - Notification button', () => {})
 
-Then('I should have notification with notification(s) - Notification button', () => {})
+Then('I should have notification with {} notifications - Notification Button', (number) => {})
 
 
 // Notification message
@@ -27,4 +27,4 @@ When('I am authenticated - Notification Messages', () => {})
 
 When('I click on notification button - Notification Messages', () => {})
 
-Then('I should display last five notifications - Notification Messages', () => {})
+Then('I should display {} notifications - Notification Messages', (notificationMessage) => {})
