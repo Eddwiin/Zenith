@@ -12,4 +12,5 @@ Feature: Zenith - Login
             | email             | password   | urlToRedirect | message                    |
             | johntest.com      | Azerty123! | /login        | Email is invalid           |
             | johntest@test.com | Azerty123! | /login        | Email or password is wrong |
+            | johntest@test.com | Azerty123! | /login        | Error server               |
             | johntest@test.com | Azerty123! | /home         | Successful connection      |

@@ -9,21 +9,22 @@ Feature: Zenith - Registration
         And I type a password with <password> - Registration
         And I type a confirmation password with <confirmationPassword> - Registration
         And I click on submit button - Registration
-        Then I should display a message with <expectedMessage> - Registration
+        Then I am redirect to <urlToRedirect> with the message <message> - Registration
 
         Examples:
-            | firstName | lastName | email                | password  | confirmationPassword | expectedMessage                                |
-            |           | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | First name is required                         |
-            | John      |          | john.doe@test.fr     | Azerty123 | Azerty123            | Last name is required                          |
-            | John      | Doe      |                      | Azerty123 | Azerty123            | Email is required                              |
-            | John      | Doe      | john.doe@test.fr     |           | Azerty123            | Password is required                           |
-            | John      | Doe      | john.doe@test.fr     | Azerty123 |                      | Confirmation password is required              |
-            | J         | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | First name must contain more than one letter   |
-            | John      | D        | john.doe@test.fr     | Azerty123 | Azerty123            | Last name must contain more than one letter    |
-            | John      | Doe      | john.doetest.fr      | Azerty123 | Azerty123            | Email is invalid                               |
-            | John      | Doe      | john.doetest@test    | Azerty123 | Azerty123            | Email is invalid                               |
-            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | Email exists                                   |
-            | John      | Doe      | john.doetest@test.fr | Azerty!   | Azerty!              | Password is invalid                            |
-            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty               | Password is invalid                            |
-            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty12323          | Password and confirm password are not the same |
-            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | Account created                                |
+            | firstName | lastName | email                | password  | confirmationPassword | urlToRedirect | message                                        |
+            |           | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | First name is required                         |
+            | John      |          | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | Last name is required                          |
+            | John      | Doe      |                      | Azerty123 | Azerty123            | /registration | Email is required                              |
+            | John      | Doe      | john.doe@test.fr     |           | Azerty123            | /registration | Password is required                           |
+            | John      | Doe      | john.doe@test.fr     | Azerty123 |                      | /registration | Confirmation password is required              |
+            | J         | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | First name must contain more than one letter   |
+            | John      | D        | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | Last name must contain more than one letter    |
+            | John      | Doe      | john.doetest.fr      | Azerty123 | Azerty123            | /registration | Email is invalid                               |
+            | John      | Doe      | john.doetest@test    | Azerty123 | Azerty123            | /registration | Email is invalid                               |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Email exists                                   |
+            | John      | Doe      | john.doetest@test.fr | Azerty!   | Azerty!              | /registration | Password is invalid                            |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty               | /registration | Password is invalid                            |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty12323          | /registration | Password and confirm password are not the same |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Error Server                                   |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Account created                                |

@@ -9,7 +9,8 @@ Feature: Zenith - Forgot Password
 
         Examples:
 
-            | email             | urlToRedirect    |
-            | johntest@test     | /forgot-password | Email is invalid |
+            | email             | urlToRedirect    | message             |
+            | johntest@test     | /forgot-password | Email is invalid    |
             | johntest@test.com | /forgot-password | Email doesn't exist |
-            | johntest@test.com | /login           | Reset email sent |
+            | johntest@test.com | /forgot-password | Error Server        |
+            | johntest@test.com | /login           | Reset email sent    |

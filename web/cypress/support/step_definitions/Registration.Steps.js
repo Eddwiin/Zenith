@@ -14,4 +14,4 @@ When('I type a confirmation password with {} - Registration', (confirmationPassw
 
 When('I click on submit button - Registration', () => {})
 
-Then('I should display a message with {} - Registration', (expectedMessage) => {})
+Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, message) => {})
