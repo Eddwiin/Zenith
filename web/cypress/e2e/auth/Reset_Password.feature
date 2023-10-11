@@ -3,7 +3,7 @@ Feature: Zenith - Reset password
 
     Scenario Outline: Successful & Unsucessful forgot password
         Given I navigate to reset password - Reset password
-        And I type a password with <password> - Reset password
+        When I type a password with <password> - Reset password
         And I type a confirmation password with <confirmationPassword> - Reset password
         And I click on submit button - Reset password
         And I am redirect to <urlToRedirect> with the message <message> - Reset password

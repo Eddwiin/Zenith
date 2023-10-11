@@ -3,13 +3,13 @@ Feature: Zenith - Registration
 
     Scenario Outline: Successful & Unsucessful registration
         Given I navigate to registration page - Registration
-        And I type a first name with <firstName> - Registration
-        And I type a last name with <lastName> - Registration
-        And I type an email with <email> - Registration
-        And I type a password with <password> - Registration
-        And I type a confirmation password with <confirmationPassword> - Registration
+        When I type a first name with '<firstName>' - Registration
+        And I type a last name with '<lastName>' - Registration
+        And I type an email with '<email>' - Registration
+        And I type a password with '<password>' - Registration
+        And I type a confirmation password with '<confirmationPassword>' - Registration
         And I click on submit button - Registration
-        Then I am redirect to <urlToRedirect> with the message <message> - Registration
+        Then I am redirect to '<urlToRedirect>' with the message '<message>' - Registration
 
         Examples:
             | firstName | lastName | email                | password  | confirmationPassword | urlToRedirect | message                                        |

@@ -3,10 +3,10 @@ Feature: Zenith - Login
 
     Scenario Outline: Successful & Unsucessful login
         Given I navigate to login page - Login
-        And I type an email with <email> - Login
-        And I type a password with <password> - Login
+        When I type an email with '<email>' - Login
+        And I type a password with '<password>' - Login
         And I click on submit button - Login
-        Then I am redirect to <urlToRedirect> with the message <message> - Login
+        Then I am redirect to '<urlToRedirect>' with the message '<message>' - Login
 
         Examples:
             | email             | password   | urlToRedirect | message                    |
