@@ -11,7 +11,7 @@ Feature: Zenith - Navbar
 
         Examples:
             | urlToRedirect | message                               |
-            | /home         | Error Server                          |
+            | /home         | Something wrong with the server       |
             | /login        | you have been successfully logged out |
 
     Scenario: Display notification button

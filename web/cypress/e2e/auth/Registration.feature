@@ -26,5 +26,5 @@ Feature: Zenith - Registration
             | John      | Doe      | john.doetest@test.fr | Azerty!   | Azerty!              | /registration | Password is invalid                            |
             | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty               | /registration | Password is invalid                            |
             | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty12323          | /registration | Password and confirm password are not the same |
-            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Error Server                                   |
+            | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Something wrong with the server                |
             | John      | Doe      | john.doetest@test.fr | Azerty123 | Azerty123            | /registration | Account created                                |

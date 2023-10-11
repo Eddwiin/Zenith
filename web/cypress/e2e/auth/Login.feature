@@ -9,8 +9,8 @@ Feature: Zenith - Login
         Then I am redirect to '<urlToRedirect>' with the message '<message>' - Login
 
         Examples:
-            | email             | password   | urlToRedirect | message                    |
-            | johntest.com      | Azerty123! | /login        | Email is invalid           |
-            | johntest@test.com | Azerty123! | /login        | Email or password is wrong |
-            | johntest@test.com | Azerty123! | /login        | Error server               |
-            | johntest@test.com | Azerty123! | /home         | Successful connection      |
+            | email             | password   | urlToRedirect | message                         |
+            | johntest.com      | Azerty123! | /login        | Email is invalid                |
+            | johntest@test.com | Azerty123! | /login        | Email or password is wrong      |
+            | johntest@test.com | Azerty123! | /login        | Something wrong with the server |
+            | johntest@test.com | Azerty123! | /home         | Successful connection           |

@@ -1,4 +1,4 @@
-const { Given, When } = require("@badeball/cypress-cucumber-preprocessor");
+const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
  
 Given('I navigate to detail page - Detail book', () => { })
 
@@ -7,7 +7,7 @@ When('I am authenticated - Detail book', () => {})
 
 
 // show detail book
-Then('I can see information of the book : '<name>', '<description>', '<nbOfPage>', '<category>', '<createdAt>', '<updatedAt>' and '<comments>' - Show detail book',
+Then('I can see information of the book : {}, {}, {}, {}, {}, {} and {} - Show detail book',
     (name, description, nbOfPage, category, createdAt, updatedAt, comments ) => {})
 
 
@@ -26,7 +26,7 @@ When('I select the category of the book {} - Update detail book', (category) => 
 
 When('I click on the update button - Update detail book', (category) => {})
 
-Then('I back to detail page with new informations of book udpated - Update detail book', () => {})
+Then('I see the message {} - Update detail book', (message) => {})
 
 
 // Delete book
@@ -36,4 +36,4 @@ When('I click on the delete button - Delete book', () => {})
 
 When('I click on confirm delete book in the popup - Delete book', () => {})
 
-When('I am redirect to list of the books in the home page without the book deleted - Delete book', () => {})
+Then('I am redirect to list of the books in the home page with the message {} - Delete book', (message) => {})

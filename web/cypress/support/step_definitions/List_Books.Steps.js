@@ -11,9 +11,9 @@ Then('I display last books added - List books', () => {})
 
 
 // Search book
-When('I type two caracteres on search input', () => {})
+When('I type two caracteres {} on search input', (searchText) => {})
 
-Then('I display all books matching with filter - Search book', () => {})
+Then('I display all books {} matching with filter - Search book', (booksFound) => {})
 
 
 
@@ -34,12 +34,12 @@ When('I select the category of the book {} - Add new book', (category) => {})
 
 When('I click on the submit button - Add new book', (category) => {})
 
-When('I back to home page with my new book added on the top of the list - Add new book', (category) => {})
+Then('I see the message {} - Add new book', (message) => {})
 
 
 
 // Redirect to detail page
-When('I click on the book - Redirect detail page', () => {})
+When('I click on the book - Navigate to detail page', () => {})
 
-Then('I am redirect to detail page - Redirect detail page', () => {})
+Then('I am redirect to detail page - Navigate to detail page', () => {})
 
