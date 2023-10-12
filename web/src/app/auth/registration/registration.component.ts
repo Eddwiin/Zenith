@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+
+const LOGIN_FORM_KEYS = {
+  firstNameCtrl: 'firstNameCtrl'
+} as const;
 
 @Component({
   selector: 'zth-registration',
@@ -10,5 +14,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
-  loginFormGroup: FormGroup = new FormGroup({})
+  loginFormGroup: FormGroup = new FormGroup({
+    [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl('')
+  })
 }
