@@ -44,4 +44,12 @@ describe('RegistrationComponent', () => {
       expect(component.loginFormGroup.get('confirmationPasswordCtrl')).toBeTruthy()
     })
   })
+
+  describe('FirstNameCtrl', () => {
+    it('should return an error when firstNameCtrl value is empty', () => {
+      const firstNameCtrl = component.loginFormGroup.get('firstNameCtrl');
+
+      expect(firstNameCtrl?.hasError('required')).toBeTrue();
+    })
+  })
 });

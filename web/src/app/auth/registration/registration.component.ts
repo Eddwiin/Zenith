@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 const LOGIN_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
@@ -19,7 +19,7 @@ const LOGIN_FORM_KEYS = {
 })
 export class RegistrationComponent {
   loginFormGroup: FormGroup = new FormGroup({
-    [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl(''),
+    [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl('', [Validators.required]),
     [LOGIN_FORM_KEYS.lastNameCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.emailCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl(''),
