@@ -5,7 +5,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 const LOGIN_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
   lastNameCtrl: 'lastNameCtrl',
-  emailCtrl: 'emailCtrl'
+  emailCtrl: 'emailCtrl',
+  passwordCtrl: 'passwordCtrl'
 } as const;
 
 @Component({
@@ -19,6 +20,7 @@ export class RegistrationComponent {
   loginFormGroup: FormGroup = new FormGroup({
     [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.lastNameCtrl]: new FormControl(''),
-    [LOGIN_FORM_KEYS.emailCtrl]: new FormControl('')
+    [LOGIN_FORM_KEYS.emailCtrl]: new FormControl(''),
+    [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl('')
   })
 }
