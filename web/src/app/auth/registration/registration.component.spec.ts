@@ -31,5 +31,9 @@ describe('RegistrationComponent', () => {
     it('should contains lastNameCtrl', () => {
       expect(component.loginFormGroup.get('lastNameCtrl')).toBeTruthy()
     })
+
+    it('should contains emailCtrl', () => {
+      expect(component.loginFormGroup.get('emailCtrl')).toBeTruthy()
+    })
   })
 });
