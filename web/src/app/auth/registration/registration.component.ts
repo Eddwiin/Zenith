@@ -19,7 +19,7 @@ const LOGIN_FORM_KEYS = {
 })
 export class RegistrationComponent {
   loginFormGroup: FormGroup = new FormGroup({
-    [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl('', [Validators.required]),
+    [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl('', [Validators.required, Validators.minLength(2)]),
     [LOGIN_FORM_KEYS.lastNameCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.emailCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl(''),

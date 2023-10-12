@@ -51,5 +51,11 @@ describe('RegistrationComponent', () => {
 
       expect(firstNameCtrl?.hasError('required')).toBeTrue();
     })
+
+    it('should return an error when firstNameCtrl value is empty', () => {
+      const firstNameCtrl = component.loginFormGroup.get('firstNameCtrl');
+      firstNameCtrl?.patchValue('t')
+      expect(firstNameCtrl?.hasError('minlength')).toBeTrue();
+    })
   })
 });
