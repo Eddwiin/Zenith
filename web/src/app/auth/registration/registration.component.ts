@@ -6,7 +6,8 @@ const LOGIN_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
   lastNameCtrl: 'lastNameCtrl',
   emailCtrl: 'emailCtrl',
-  passwordCtrl: 'passwordCtrl'
+  passwordCtrl: 'passwordCtrl',
+  confirmationPasswordCtrl: 'confirmationPasswordCtrl'
 } as const;
 
 @Component({
@@ -21,6 +22,7 @@ export class RegistrationComponent {
     [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.lastNameCtrl]: new FormControl(''),
     [LOGIN_FORM_KEYS.emailCtrl]: new FormControl(''),
-    [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl('')
+    [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl(''),
+    [LOGIN_FORM_KEYS.confirmationPasswordCtrl]: new FormControl('')
   })
 }
