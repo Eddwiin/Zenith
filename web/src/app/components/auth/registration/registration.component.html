@@ -1,0 +1,18 @@
+<p>registration works!</p>
+
+<form [formGroup]="loginFormGroup">
+  <div>
+    <label>FirstName</label>
+    <input type="text" [formControlName]="formKeys.firstNameCtrl" />
+  </div>
+
+  <div>
+    <label>lastName</label>
+    <input type="text" [formControlName]="formKeys.lastNameCtrl" />
+  </div>
+
+  <div>
+    <label>email</label>
+    <input type="email" [formControlName]="formKeys.emailCtrl" />
+  </div>
+</form>
