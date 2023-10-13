@@ -16,6 +16,7 @@ describe('RegistrationComponent', () => {
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);
+
     fixture.detectChanges();
   });
 
@@ -139,8 +140,54 @@ describe('RegistrationComponent', () => {
 
       emailCtrl?.patchValue(emailValue)
 
-      expect(emailExistSpy).toHaveBeenCalled
+      expect(emailExistSpy).toHaveBeenCalled()
       expect(emailCtrl?.hasError('emailExists')).toBeFalse()
+    })
+  })
+
+
+  describe('passwordCtrl', () => {
+    it('should return an error when password is empty', () => {
+      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
+      passwordCtrl?.patchValue('');
+      
+      expect(passwordCtrl?.hasError('required')).toBeTrue();
+    })
+
+    it('should return an error when password is invalid', () => {
+      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
+      passwordCtrl?.patchValue('azert1');
+      
+      expect(passwordCtrl?.hasError('passwordInvalid')).toBeTrue();
+    })
+  })
+
+  describe('confirmationPasswordCtrl', () => {
+    it('should return an error when password is empty', () => {
+      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
+      confirmationPasswordCtrl?.patchValue('');
+      
+      expect(confirmationPasswordCtrl?.hasError('required')).toBeTrue();
+    })
+
+    it('should return an error when password is invalid', () => {
+      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
+      confirmationPasswordCtrl?.patchValue('azert1');
+      
+      expect(confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
+    })
+  })
+
+  describe('loginFormGroup', () => {
+    it('should return an error when passwords are not the same', () => {
+      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
+      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
+      
+      passwordCtrl?.patchValue('testAZERT123!');
+      confirmationPasswordCtrl?.patchValue('testAZERT123!');
+
+      
+      expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeFalse();
     })
   })
 });

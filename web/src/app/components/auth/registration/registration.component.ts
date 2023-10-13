@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { EmailValidatorService } from 'src/app/core/validators/email.validator';
+import { EmailValidatorService } from 'src/app/core/validators/email/email.validator';
+import { PasswordValidatorService } from 'src/app/core/validators/password/password-validator.service';
 
-const LOGIN_FORM_KEYS = {
+const  LOGIN_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
   lastNameCtrl: 'lastNameCtrl',
   emailCtrl: 'emailCtrl',
@@ -20,8 +21,11 @@ const LOGIN_FORM_KEYS = {
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
+
+  formKeys = { ...LOGIN_FORM_KEYS };
   emailValidator = inject(EmailValidatorService)
-  formKeys = { ...LOGIN_FORM_KEYS};
+  passwordValidor = inject(PasswordValidatorService);
+
   
   loginFormGroup: FormGroup = new FormGroup({
     [LOGIN_FORM_KEYS.firstNameCtrl]: new FormControl('', {
@@ -34,7 +38,13 @@ export class RegistrationComponent {
       validators: [Validators.required, this.emailValidator.checkIfEmailMatchWithRegex],
       asyncValidators: [this.emailValidator.checkIfEmailExists(inject(AuthService))]
     }),
-    [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl(''),
-    [LOGIN_FORM_KEYS.confirmationPasswordCtrl]: new FormControl('')
+    [LOGIN_FORM_KEYS.passwordCtrl]: new FormControl('', {
+      validators: [Validators.required, this.passwordValidor.checkIfPasswordRegexIsValid]
+    }),
+    [LOGIN_FORM_KEYS.confirmationPasswordCtrl]: new FormControl('', {
+      validators: [Validators.required, this.passwordValidor.checkIfPasswordRegexIsValid]
+    })
+  }, {
+    validators: [this.passwordValidor.checkPasswordsAreTheSame(LOGIN_FORM_KEYS.passwordCtrl, LOGIN_FORM_KEYS.confirmationPasswordCtrl)]
   })
 }
