@@ -2,7 +2,7 @@
   <div>
     <label>FirstName</label>
     <input
-      data-firstName-input-registration
+      data-cy="firstName-input-registration"
       type="text"
       [formControlName]="formKeys.firstNameCtrl"
     />
@@ -11,7 +11,7 @@
   <div>
     <label>lastName</label>
     <input
-      data-lastName-input-registration
+      data-cy="lastName-input-registration"
       type="text"
       [formControlName]="formKeys.lastNameCtrl"
     />
@@ -20,7 +20,7 @@
   <div>
     <label>email</label>
     <input
-      data-email-input-registration
+      data-cy="email-input-registration"
       type="email"
       [formControlName]="formKeys.emailCtrl"
     />
@@ -29,7 +29,7 @@
   <div>
     <label>password</label>
     <input
-      data-password-input-registration
+      data-cy="password-input-registration"
       type="password"
       [formControlName]="formKeys.passwordCtrl"
     />
@@ -38,13 +38,16 @@
   <div>
     <label>confirmation password</label>
     <input
-      data-confirmationPassword-input-registration
+      data-cy="confirmationPassword-input-registration"
       type="password"
       [formControlName]="formKeys.confirmationPasswordCtrl"
     />
   </div>
 
-  <button data-submit-button-registration [disabled]="loginFormGroup.invalid">
+  <button
+    data-cy="submit-button-registration"
+    [disabled]="loginFormGroup.invalid"
+  >
     Submit
   </button>
 </form>

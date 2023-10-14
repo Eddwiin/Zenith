@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
@@ -9,6 +10,11 @@ describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
   let authService: AuthService;
+  let firstNameCtrl: FormControl<string> | null;
+  let lastNameCtrl: FormControl<string> | null;
+  let emailCtrl: FormControl;
+  let passwordCtrl: FormControl;
+  let confirmationPasswordCtrl: FormControl
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,6 +27,16 @@ describe('RegistrationComponent', () => {
     fixture.detectChanges();
   });
 
+  beforeEach(() => {
+    component.loginFormGroup.reset();
+    
+    firstNameCtrl = component.loginFormGroup.get('firstNameCtrl') as typeof firstNameCtrl
+    lastNameCtrl = component.loginFormGroup.get('lastNameCtrl') as typeof lastNameCtrl
+    emailCtrl = component.loginFormGroup.get('emailCtrl') as typeof emailCtrl;
+    passwordCtrl = component.loginFormGroup.get('passwordCtrl') as typeof passwordCtrl;
+    confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl') as typeof confirmationPasswordCtrl;
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -31,41 +47,37 @@ describe('RegistrationComponent', () => {
     })
 
     it('should contains firstNameCtrl', () => {
-      expect(component.loginFormGroup.get('firstNameCtrl')).toBeTruthy();
+      expect(firstNameCtrl).toBeTruthy();
     })
 
     it('should contains lastNameCtrl', () => {
-      expect(component.loginFormGroup.get('lastNameCtrl')).toBeTruthy()
+      expect(lastNameCtrl).toBeTruthy()
     })
 
     it('should contains emailCtrl', () => {
-      expect(component.loginFormGroup.get('emailCtrl')).toBeTruthy()
+      expect(emailCtrl).toBeTruthy()
     })
 
     it('should contains passwordCtrl', () => {
-      expect(component.loginFormGroup.get('passwordCtrl')).toBeTruthy()
+      expect(passwordCtrl).toBeTruthy()
     })
 
     it('should contains confirmationPasswordCtrl', () => {
-      expect(component.loginFormGroup.get('confirmationPasswordCtrl')).toBeTruthy()
+      expect(confirmationPasswordCtrl).toBeTruthy()
     })
   })
 
   describe('FirstNameCtrl', () => {
     it('should return an error when firstNameCtrl value is empty', () => {
-      const firstNameCtrl = component.loginFormGroup.get('firstNameCtrl');
-
       expect(firstNameCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when firstNameCtrl value is empty', () => {
-      const firstNameCtrl = component.loginFormGroup.get('firstNameCtrl');
       firstNameCtrl?.patchValue('t')
       expect(firstNameCtrl?.hasError('minlength')).toBeTrue();
     })
 
     it('should return valid firstNameCtrl when the value is egal or superior to 2 characters', () => {
-      const firstNameCtrl = component.loginFormGroup.get('firstNameCtrl');
       firstNameCtrl?.patchValue('test')
       expect(firstNameCtrl?.valid).toBeTrue();
     })
@@ -73,19 +85,15 @@ describe('RegistrationComponent', () => {
 
   describe('LastNameCtrl', () => {
     it('should return an error when lastNameCtrl value is empty', () => {
-      const lastNameCtrl = component.loginFormGroup.get('lastNameCtrl');
-
       expect(lastNameCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when lastNameCtrl value is empty', () => {
-      const lastNameCtrl = component.loginFormGroup.get('lastNameCtrl');
       lastNameCtrl?.patchValue('t')
       expect(lastNameCtrl?.hasError('minlength')).toBeTrue();
     })
 
     it('should return valid lastNameCtrl when the value is egal or superior to 2 characters', () => {
-      const lastNameCtrl = component.loginFormGroup.get('lastNameCtrl');
       lastNameCtrl?.patchValue('test')
       expect(lastNameCtrl?.valid).toBeTrue();
     })
@@ -93,20 +101,16 @@ describe('RegistrationComponent', () => {
 
   describe('emailCtrl', () => {
     it('should return an error when emailCtrl value is empty', () => {
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
-
       expect(emailCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return email error when emailCtrl value is john.doetest.fr', () => {
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
       emailCtrl?.patchValue('john.doetest.fr')
 
       expect(emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
     })
 
     it('should return email error when emailCtrl value is john.doe@test', () => {
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
       emailCtrl?.patchValue('john.doetest')
 
       expect(emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
@@ -114,7 +118,6 @@ describe('RegistrationComponent', () => {
 
     it('should return emailExist error when emailCtrl value already exist in database', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists').and.callFake(() => of(true))
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
       const emailValue = 'john.doetest@test.fr';
 
       emailCtrl?.patchValue(emailValue)
@@ -125,7 +128,6 @@ describe('RegistrationComponent', () => {
 
     it('should not call checkEmailExists when emailCtrl is invalid', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists')
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
       const emailValue = 'john.doetesttest.fr';
 
       emailCtrl?.patchValue(emailValue)
@@ -136,7 +138,6 @@ describe('RegistrationComponent', () => {
 
     it('should not contains emailExist error when email is not exist in database', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists').and.callFake(() => of(false))
-      const emailCtrl = component.loginFormGroup.get('emailCtrl');
       const emailValue = 'john.doetest@test.fr';
 
       emailCtrl?.patchValue(emailValue)
@@ -149,14 +150,12 @@ describe('RegistrationComponent', () => {
 
   describe('passwordCtrl', () => {
     it('should return an error when password is empty', () => {
-      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
       passwordCtrl?.patchValue('');
       
       expect(passwordCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when password is invalid', () => {
-      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
       passwordCtrl?.patchValue('azert1');
       
       expect(passwordCtrl?.hasError('passwordInvalid')).toBeTrue();
@@ -165,14 +164,12 @@ describe('RegistrationComponent', () => {
 
   describe('confirmationPasswordCtrl', () => {
     it('should return an error when password is empty', () => {
-      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
       confirmationPasswordCtrl?.patchValue('');
       
       expect(confirmationPasswordCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when password is invalid', () => {
-      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
       confirmationPasswordCtrl?.patchValue('azert1');
       
       expect(confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
@@ -187,28 +184,27 @@ describe('RegistrationComponent', () => {
       passwordCtrl?.patchValue('testAZERT124!');
       confirmationPasswordCtrl?.patchValue('testAZERT123!');
 
-      
       expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeTrue();
     })
   })
 
   describe('OnSubmit', () => {
     it('should disable submit button when loginFormGroup is invalid', () => {
-      const submitBtnEl = fixture.debugElement.query(By.css('[data-submit-button-registration]'))
+      const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeTrue();
     })
 
     it('should active submit button when loginFormGroup is valid', () => {
-      component.loginFormGroup.get('firstNameCtrl')?.patchValue('John')
-      component.loginFormGroup.get('lastNameCtrl')?.patchValue('Doe')
-      component.loginFormGroup.get('emailCtrl')?.patchValue('john.doe@test.com')
-      component.loginFormGroup.get('passwordCtrl')?.patchValue('Azerty123!')
-      component.loginFormGroup.get('confirmationPasswordCtrl')?.patchValue('Azerty123!')
+      firstNameCtrl?.patchValue('John')
+      lastNameCtrl?.patchValue('Doe')
+      emailCtrl?.patchValue('john.doe@test.com')
+      passwordCtrl?.patchValue('Azerty123!')
+      confirmationPasswordCtrl?.patchValue('Azerty123!')
 
       fixture.detectChanges();
       
-      const submitBtnEl = fixture.debugElement.query(By.css('[data-submit-button-registration]'))
+      const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeFalse();
     })
