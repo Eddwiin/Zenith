@@ -16,6 +16,7 @@ Feature: Zenith - Registration
             |           | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | First name is required                         |
             | t         | Doe      | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | First name must contains 2 characters minimum  |
             | John      |          | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | Last name is required                          |
+            | John      | D        | john.doe@test.fr     | Azerty123 | Azerty123            | /registration | First name must contains 2 characters minimum  |
             | John      | Doe      |                      | Azerty123 | Azerty123            | /registration | Email is required                              |
             | John      | Doe      | john.doetest.fr      | Azerty123 | Azerty123            | /registration | Email format is invalid                        |
             | John      | Doe      | john.doe@test        | Azerty123 | Azerty123            | /registration | Email format is invalid                        |

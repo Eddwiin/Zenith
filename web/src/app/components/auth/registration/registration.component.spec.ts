@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { RegistrationComponent } from './registration.component';
@@ -183,11 +184,33 @@ describe('RegistrationComponent', () => {
       const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
       const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
       
-      passwordCtrl?.patchValue('testAZERT123!');
+      passwordCtrl?.patchValue('testAZERT124!');
       confirmationPasswordCtrl?.patchValue('testAZERT123!');
 
       
-      expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeFalse();
+      expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeTrue();
+    })
+  })
+
+  describe('OnSubmit', () => {
+    it('should disable submit button when loginFormGroup is invalid', () => {
+      const submitBtnEl = fixture.debugElement.query(By.css('[data-submit-button-registration]'))
+
+      expect(submitBtnEl.nativeElement.disabled).toBeTrue();
+    })
+
+    it('should active submit button when loginFormGroup is valid', () => {
+      component.loginFormGroup.get('firstNameCtrl')?.patchValue('John')
+      component.loginFormGroup.get('lastNameCtrl')?.patchValue('Doe')
+      component.loginFormGroup.get('emailCtrl')?.patchValue('john.doe@test.com')
+      component.loginFormGroup.get('passwordCtrl')?.patchValue('Azerty123!')
+      component.loginFormGroup.get('confirmationPasswordCtrl')?.patchValue('Azerty123!')
+
+      fixture.detectChanges();
+      
+      const submitBtnEl = fixture.debugElement.query(By.css('[data-submit-button-registration]'))
+
+      expect(submitBtnEl.nativeElement.disabled).toBeFalse();
     })
   })
 });

@@ -1,31 +1,50 @@
-<p>registration works!</p>
-
-<form [formGroup]="loginFormGroup">
+<form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
   <div>
     <label>FirstName</label>
-    <input type="text" [formControlName]="formKeys.firstNameCtrl" />
+    <input
+      data-firstName-input-registration
+      type="text"
+      [formControlName]="formKeys.firstNameCtrl"
+    />
   </div>
 
   <div>
     <label>lastName</label>
-    <input type="text" [formControlName]="formKeys.lastNameCtrl" />
+    <input
+      data-lastName-input-registration
+      type="text"
+      [formControlName]="formKeys.lastNameCtrl"
+    />
   </div>
 
   <div>
     <label>email</label>
-    <input type="email" [formControlName]="formKeys.emailCtrl" />
+    <input
+      data-email-input-registration
+      type="email"
+      [formControlName]="formKeys.emailCtrl"
+    />
   </div>
 
   <div>
     <label>password</label>
-    <input type="password" [formControlName]="formKeys.passwordCtrl" />
+    <input
+      data-password-input-registration
+      type="password"
+      [formControlName]="formKeys.passwordCtrl"
+    />
   </div>
 
   <div>
     <label>confirmation password</label>
     <input
+      data-confirmationPassword-input-registration
       type="password"
       [formControlName]="formKeys.confirmationPasswordCtrl"
     />
   </div>
+
+  <button data-submit-button-registration [disabled]="loginFormGroup.invalid">
+    Submit
+  </button>
 </form>

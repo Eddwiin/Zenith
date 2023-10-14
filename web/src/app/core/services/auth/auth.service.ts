@@ -7,6 +7,6 @@ import { of } from 'rxjs';
 export class AuthService {
 
   checkEmailExists(email: string) {
-    return of(true)
+    return of(false)
   }
 }

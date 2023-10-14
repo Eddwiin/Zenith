@@ -47,4 +47,9 @@ export class RegistrationComponent {
   }, {
     validators: [this.passwordValidor.checkPasswordsAreTheSame(LOGIN_FORM_KEYS.passwordCtrl, LOGIN_FORM_KEYS.confirmationPasswordCtrl)]
   })
+
+
+  onSubmit() {
+    
+  }
 }
