@@ -16,17 +16,15 @@ Feature: Zenith - Registration
             |           | Doe      | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | First name is required                         |
             | t         | Doe      | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | First name must contains 2 characters minimum  |
             | John      |          | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | Last name is required                          |
-            | John      | D        | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | First name must contains 2 characters minimum  |
+            | John      | D        | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | Last name must contains 2 characters minimum   |
             | John      | Doe      |                      | Azerty123! | Azerty123!           | /registration | Email is required                              |
             | John      | Doe      | john.doetest.fr      | Azerty123! | Azerty123!           | /registration | Email format is invalid                        |
             | John      | Doe      | john.doe@test        | Azerty123! | Azerty123!           | /registration | Email format is invalid                        |
             | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty123!           | /registration | Email exists                                   |
             | John      | Doe      | john.doe@test.fr     |            | Azerty123!           | /registration | Password is required                           |
             | John      | Doe      | john.doe@test.fr     | Azerty123! |                      | /registration | Confirmation password is required              |
-            | J         | Doe      | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | First name must contain more than one letter   |
-            | John      | D        | john.doe@test.fr     | Azerty123! | Azerty123!           | /registration | Last name must contain more than one letter    |
             | John      | Doe      | john.doetest@test.fr | Azerty!    | Azerty!              | /registration | Password is invalid                            |
-            | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty               | /registration | Password is invalid                            |
+            | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty               | /registration | Confirmation Password is invalid               |
             | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty12323!         | /registration | Password and confirm password are not the same |
             | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty123!           | /registration | Something wrong with the server                |
             | John      | Doe      | john.doetest@test.fr | Azerty123! | Azerty123!           | /registration | Account created                                |

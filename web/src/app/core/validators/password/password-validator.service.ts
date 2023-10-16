@@ -7,9 +7,9 @@ import { AbstractControl } from '@angular/forms';
 export class PasswordValidatorService {
   static readonly PASSWORD_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
   
-  checkIfPasswordRegexIsValid(passwordCtrl: AbstractControl) {
-    return (PasswordValidatorService.PASSWORD_REGEX.test(passwordCtrl.value))
-        ? null :  { passwordInvalid: true}
+  checkIfPasswordRegexIsValid(passwordCtrl: AbstractControl) {    
+    const passwordMatchWithRegex = PasswordValidatorService.PASSWORD_REGEX.test(passwordCtrl.value)
+    return  passwordMatchWithRegex ? null :  { passwordInvalid: true}
   }
 
   checkPasswordsAreTheSame(passwordCtrlKey: string, confirmationPasswordCtrlKey: string) {

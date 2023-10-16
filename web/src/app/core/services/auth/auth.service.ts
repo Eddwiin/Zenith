@@ -9,4 +9,8 @@ export class AuthService {
   checkEmailExists(email: string) {
     return of(false)
   }
+
+  createAccount() {
+    return of(null);
+  }
 }

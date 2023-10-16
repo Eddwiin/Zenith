@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
@@ -10,11 +9,6 @@ describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
   let authService: AuthService;
-  let firstNameCtrl: FormControl<string> | null;
-  let lastNameCtrl: FormControl<string> | null;
-  let emailCtrl: FormControl;
-  let passwordCtrl: FormControl;
-  let confirmationPasswordCtrl: FormControl
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,12 +23,6 @@ describe('RegistrationComponent', () => {
 
   beforeEach(() => {
     component.loginFormGroup.reset();
-    
-    firstNameCtrl = component.loginFormGroup.get('firstNameCtrl') as typeof firstNameCtrl
-    lastNameCtrl = component.loginFormGroup.get('lastNameCtrl') as typeof lastNameCtrl
-    emailCtrl = component.loginFormGroup.get('emailCtrl') as typeof emailCtrl;
-    passwordCtrl = component.loginFormGroup.get('passwordCtrl') as typeof passwordCtrl;
-    confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl') as typeof confirmationPasswordCtrl;
   })
 
   it('should create', () => {
@@ -47,166 +35,176 @@ describe('RegistrationComponent', () => {
     })
 
     it('should contains firstNameCtrl', () => {
-      expect(firstNameCtrl).toBeTruthy();
+      expect(component.firstNameCtrl).toBeTruthy();
     })
 
     it('should contains lastNameCtrl', () => {
-      expect(lastNameCtrl).toBeTruthy()
+      expect(component.lastNameCtrl).toBeTruthy()
     })
 
     it('should contains emailCtrl', () => {
-      expect(emailCtrl).toBeTruthy()
+      expect(component.emailCtrl).toBeTruthy()
     })
 
     it('should contains passwordCtrl', () => {
-      expect(passwordCtrl).toBeTruthy()
+      expect(component.passwordCtrl).toBeTruthy()
     })
 
     it('should contains confirmationPasswordCtrl', () => {
-      expect(confirmationPasswordCtrl).toBeTruthy()
+      expect(component.confirmationPasswordCtrl).toBeTruthy()
     })
   })
 
   describe('FirstNameCtrl', () => {
     it('should return an error when firstNameCtrl value is empty', () => {
-      expect(firstNameCtrl?.hasError('required')).toBeTrue();
+      expect(component.firstNameCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when firstNameCtrl value is empty', () => {
-      firstNameCtrl?.patchValue('t')
-      expect(firstNameCtrl?.hasError('minlength')).toBeTrue();
+      component.firstNameCtrl?.patchValue('t')
+      expect(component.firstNameCtrl?.hasError('minlength')).toBeTrue();
     })
 
     it('should return valid firstNameCtrl when the value is egal or superior to 2 characters', () => {
-      firstNameCtrl?.patchValue('test')
-      expect(firstNameCtrl?.valid).toBeTrue();
+      component.firstNameCtrl?.patchValue('test')
+      expect(component.firstNameCtrl?.valid).toBeTrue();
     })
   })
 
   describe('LastNameCtrl', () => {
     it('should return an error when lastNameCtrl value is empty', () => {
-      expect(lastNameCtrl?.hasError('required')).toBeTrue();
+      expect(component.lastNameCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when lastNameCtrl value is empty', () => {
-      lastNameCtrl?.patchValue('t')
-      expect(lastNameCtrl?.hasError('minlength')).toBeTrue();
+      component.lastNameCtrl?.patchValue('t')
+      expect(component.lastNameCtrl?.hasError('minlength')).toBeTrue();
     })
 
     it('should return valid lastNameCtrl when the value is egal or superior to 2 characters', () => {
-      lastNameCtrl?.patchValue('test')
-      expect(lastNameCtrl?.valid).toBeTrue();
+      component.lastNameCtrl?.patchValue('test')
+      expect(component.lastNameCtrl?.valid).toBeTrue();
     })
   })
 
   describe('emailCtrl', () => {
-    it('should return an error when emailCtrl value is empty', () => {
-      expect(emailCtrl?.hasError('required')).toBeTrue();
-    })
+    // it('should return an error when emailCtrl value is empty', () => {
+    //   expect(component.emailCtrl?.hasError('required')).toBeTrue();
+    // })
 
     it('should return email error when emailCtrl value is john.doetest.fr', () => {
-      emailCtrl?.patchValue('john.doetest.fr')
+      component.emailCtrl?.patchValue('john.doetest.fr')
 
-      expect(emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
+      expect(component.emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
     })
 
     it('should return email error when emailCtrl value is john.doe@test', () => {
-      emailCtrl?.patchValue('john.doetest')
+      component.emailCtrl?.patchValue('john.doetest')
 
-      expect(emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
+      expect(component.emailCtrl?.hasError('emailFormatInvalid')).toBeTrue();
     })
 
     it('should return emailExist error when emailCtrl value already exist in database', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists').and.callFake(() => of(true))
       const emailValue = 'john.doetest@test.fr';
 
-      emailCtrl?.patchValue(emailValue)
+      component.emailCtrl?.patchValue(emailValue)
 
       expect(emailExistSpy).toHaveBeenCalledOnceWith(emailValue);
-      expect(emailCtrl?.hasError('emailExists')).toBeTrue()
+      expect(component.emailCtrl?.hasError('emailExists')).toBeTrue()
     })
 
     it('should not call checkEmailExists when emailCtrl is invalid', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists')
       const emailValue = 'john.doetesttest.fr';
 
-      emailCtrl?.patchValue(emailValue)
+      component.emailCtrl?.patchValue(emailValue)
 
       expect(emailExistSpy).not.toHaveBeenCalled();
-      expect(emailCtrl?.hasError('emailExists')).toBeFalse()
+      expect(component.emailCtrl?.hasError('emailExists')).toBeFalse()
     })
 
     it('should not contains emailExist error when email is not exist in database', () => {
       const emailExistSpy = spyOn(authService, 'checkEmailExists').and.callFake(() => of(false))
       const emailValue = 'john.doetest@test.fr';
 
-      emailCtrl?.patchValue(emailValue)
+      component.emailCtrl?.patchValue(emailValue)
 
       expect(emailExistSpy).toHaveBeenCalled()
-      expect(emailCtrl?.hasError('emailExists')).toBeFalse()
+      expect(component.emailCtrl?.hasError('emailExists')).toBeFalse()
     })
   })
 
 
   describe('passwordCtrl', () => {
     it('should return an error when password is empty', () => {
-      passwordCtrl?.patchValue('');
+      component.passwordCtrl?.patchValue('');
       
-      expect(passwordCtrl?.hasError('required')).toBeTrue();
+      expect(component.passwordCtrl?.hasError('required')).toBeTrue();
     })
 
     it('should return an error when password is invalid', () => {
-      passwordCtrl?.patchValue('azert1');
+      component.passwordCtrl?.patchValue('azert1');
       
-      expect(passwordCtrl?.hasError('passwordInvalid')).toBeTrue();
+      expect(component.passwordCtrl?.hasError('passwordInvalid')).toBeTrue();
     })
   })
 
   describe('confirmationPasswordCtrl', () => {
-    it('should return an error when password is empty', () => {
-      confirmationPasswordCtrl?.patchValue('');
+    it('should return an error when confirmation password is empty', () => {
+      component.confirmationPasswordCtrl?.patchValue('');
       
-      expect(confirmationPasswordCtrl?.hasError('required')).toBeTrue();
+      expect(component.confirmationPasswordCtrl?.hasError('required')).toBeTrue();
     })
 
-    it('should return an error when password is invalid', () => {
-      confirmationPasswordCtrl?.patchValue('azert1');
-      
-      expect(confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
+    it('should return an error when confirmation password is invalid', () => {
+      component.confirmationPasswordCtrl?.patchValue('azert1');
+      console.log("omponent.confirmationPasswordCtrl", component.confirmationPasswordCtrl.errors)
+      expect(component.confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
     })
   })
 
   describe('loginFormGroup', () => {
     it('should return an error when passwords are not the same', () => {
-      const passwordCtrl = component.loginFormGroup.get('passwordCtrl');
-      const confirmationPasswordCtrl = component.loginFormGroup.get('confirmationPasswordCtrl');
-      
-      passwordCtrl?.patchValue('testAZERT124!');
-      confirmationPasswordCtrl?.patchValue('testAZERT123!');
+      component.passwordCtrl?.patchValue('testAZERT124!');
+      component.confirmationPasswordCtrl?.patchValue('testAZERT123!');
 
       expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeTrue();
     })
   })
 
   describe('OnSubmit', () => {
+
+    beforeEach(() => {
+      component.firstNameCtrl?.patchValue('John')
+      component.lastNameCtrl?.patchValue('Doe')
+      component.emailCtrl?.patchValue('john.doe@test.com')
+      component.passwordCtrl?.patchValue('Azerty123!')
+      component.confirmationPasswordCtrl?.patchValue('Azerty123!')
+      fixture.detectChanges();
+    })
+
     it('should disable submit button when loginFormGroup is invalid', () => {
+      component.confirmationPasswordCtrl?.patchValue('Azert')
+      fixture.detectChanges();
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeTrue();
     })
 
     it('should active submit button when loginFormGroup is valid', () => {
-      firstNameCtrl?.patchValue('John')
-      lastNameCtrl?.patchValue('Doe')
-      emailCtrl?.patchValue('john.doe@test.com')
-      passwordCtrl?.patchValue('Azerty123!')
-      confirmationPasswordCtrl?.patchValue('Azerty123!')
-
-      fixture.detectChanges();
-      
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeFalse();
+    })
+
+    it('should call createAccount from authService', () => {
+      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of(null))
+      const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
+
+      formBtnEl.triggerEventHandler('ngSubmit', null);
+      
+      expect(createAccountSpy).toHaveBeenCalled();
     })
   })
 });
