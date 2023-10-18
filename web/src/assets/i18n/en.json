@@ -1,0 +1,19 @@
+{
+    "FirstName": "First name",
+    "LastName": "Last name",
+    "Email": "Email",
+    "Password": "Password",
+    "ConfirmPassword": "Confirm your password",
+    "Registration": "Register",
+    "FirstNameRequired": "The first name is mandatory",
+    "LastNameRequired": "The last name is mandatory",
+    "EmailRequired": "The email is mandatory",
+    "PasswordRequired": "The password is mandatory",
+    "ConfirmPasswordRequired": "The confirmation of password is mandatory",
+    "FirstNameError": "The first name must contains at least two characters",
+    "LastNameError": "The last name must contains at least two characters",
+    "EmailError": "The email is not valid",
+    "EmailExists": "The email already exists",
+    "PasswordError": "The password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
+    "PasswordsAreNotSame": "Passwords are not the same"
+}

@@ -16,9 +16,9 @@ export class EmailValidatorService {
 
      checkIfEmailExists(authService: AuthService) {
           return (control: AbstractControl) => {
-               const emailValidatorIsInvalid = control.hasError('required');
+               const emailValidatorIsInvalid = control.invalid
                if (emailValidatorIsInvalid) return of(null);
-               
+
                return authService.checkEmailExists(control.value).pipe(
                     map(isExist => isExist ? { emailExists: true } : null)
                )

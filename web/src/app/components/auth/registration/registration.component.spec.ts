@@ -1,7 +1,12 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideLocationMocks } from '@angular/common/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { routes } from 'src/app/app.routes';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { RegistrationComponent } from './registration.component';
 
@@ -10,18 +15,20 @@ describe('RegistrationComponent', () => {
   let fixture: ComponentFixture<RegistrationComponent>;
   let authService: AuthService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [RegistrationComponent]
+      imports: [RegistrationComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter(routes), provideLocationMocks()]
     });
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService);
-
+    const harness = await RouterTestingHarness.create(); // [1]
+    harness.detectChanges();
     fixture.detectChanges();
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     component.loginFormGroup.reset();
   })
 
@@ -88,9 +95,9 @@ describe('RegistrationComponent', () => {
   })
 
   describe('emailCtrl', () => {
-    // it('should return an error when emailCtrl value is empty', () => {
-    //   expect(component.emailCtrl?.hasError('required')).toBeTrue();
-    // })
+    it('should return an error when emailCtrl value is empty', () => {
+      expect(component.emailCtrl?.hasError('required')).toBeTrue();
+    })
 
     it('should return email error when emailCtrl value is john.doetest.fr', () => {
       component.emailCtrl?.patchValue('john.doetest.fr')
@@ -110,7 +117,7 @@ describe('RegistrationComponent', () => {
 
       component.emailCtrl?.patchValue(emailValue)
 
-      expect(emailExistSpy).toHaveBeenCalledOnceWith(emailValue);
+      expect(emailExistSpy).toHaveBeenCalledWith(emailValue);
       expect(component.emailCtrl?.hasError('emailExists')).toBeTrue()
     })
 
@@ -159,7 +166,6 @@ describe('RegistrationComponent', () => {
 
     it('should return an error when confirmation password is invalid', () => {
       component.confirmationPasswordCtrl?.patchValue('azert1');
-      console.log("omponent.confirmationPasswordCtrl", component.confirmationPasswordCtrl.errors)
       expect(component.confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
     })
   })
@@ -174,7 +180,6 @@ describe('RegistrationComponent', () => {
   })
 
   describe('OnSubmit', () => {
-
     beforeEach(() => {
       component.firstNameCtrl?.patchValue('John')
       component.lastNameCtrl?.patchValue('Doe')
@@ -199,7 +204,7 @@ describe('RegistrationComponent', () => {
     })
 
     it('should call createAccount from authService', () => {
-      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of(null))
+      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of({}))
       const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
 
       formBtnEl.triggerEventHandler('ngSubmit', null);

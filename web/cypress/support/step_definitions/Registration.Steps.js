@@ -31,4 +31,26 @@ When('I click on submit button - Registration', () => {
     Registration_PO.clickOnSubmitBtn();
 })
 
-Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, message) => {})
+Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, expectedMessage) => {
+    if (expectedMessage.includes('Email') && expectedMessage.includes('exists')) {
+        mockEmailExists()
+        cy.wait('@emailExists').then(() => {})
+    }
+  
+    cy.url().should('include', urlToRedirect);
+    cy.get('body').contains(expectedMessage);
+})
+
+const mockEmailExists = () => {
+    cy.intercept({
+        method: 'GET',
+        url: 'api/auth/checkEmailExists'
+    }).as("emailExists")
+}
+
+// const mockAccountCreate = () => {
+//    cy.intercept({
+//         method: 'POST',
+//         url: 'api/auth/createAccount',
+//    }, { created: true }).as('createAccountSuccess')
+// }

@@ -4,25 +4,25 @@
   data-cy="loginFormGroup-registration"
 >
   <div>
-    <label>FirstName</label>
+    <label>{{ "FirstName" | translate }}</label>
     <input
       data-cy="firstName-input-registration"
       type="text"
       [formControl]="firstNameCtrl"
     />
     <div *ngIf="firstNameCtrl.touched">
-      <ng-container *ngIf="firstNameCtrl.errors?.['required']"
-        >First name is required
+      <ng-container *ngIf="firstNameCtrl.errors?.['required']">
+        {{ "FirstNameRequired" | translate }}
       </ng-container>
 
-      <ng-container *ngIf="firstNameCtrl.errors?.['minlength']"
-        >First name must contains 2 characters minimum
+      <ng-container *ngIf="firstNameCtrl.errors?.['minlength']">
+        {{ "FirstNameError" | translate }}
       </ng-container>
     </div>
   </div>
 
   <div>
-    <label>lastName</label>
+    <label>{{ "LastName" | translate }}</label>
     <input
       data-cy="lastName-input-registration"
       type="text"
@@ -30,35 +30,41 @@
     />
 
     <div *ngIf="lastNameCtrl.touched">
-      <ng-container *ngIf="lastNameCtrl.errors?.['required']"
-        >Last name is required
+      <ng-container *ngIf="lastNameCtrl.errors?.['required']">
+        {{ "LastNameRequired" | translate }}
       </ng-container>
-      <ng-container *ngIf="lastNameCtrl.errors?.['minlength']"
-        >Last name must contains 2 characters minimum
+      <ng-container *ngIf="lastNameCtrl.errors?.['minlength']">
+        {{ "LastNameError" | translate }}
       </ng-container>
     </div>
   </div>
 
   <div>
-    <label>email</label>
+    <label>{{ "Email" | translate }}</label>
     <input
       data-cy="email-input-registration"
       type="email"
       [formControl]="emailCtrl"
     />
 
-    <div *ngIf="emailCtrl.touched">
-      <ng-container *ngIf="emailCtrl.errors?.['emailFormatInvalid']">
-        Email format is invalid
-      </ng-container>
-      <ng-container *ngIf="emailCtrl.errors?.['emailExists']">
-        Email exists
-      </ng-container>
-    </div>
+    <ng-container *ngIf="emailCtrl.touched">
+      <div *ngIf="emailCtrl.errors?.['required']; else emailFormatInvalidBlock">
+        {{ "EmailRequired" | translate }}
+      </div>
+      <ng-template #emailFormatInvalidBlock>
+        <div *ngIf="emailCtrl.errors?.['emailFormatInvalid']">
+          {{ "EmailError" | translate }}
+        </div>
+      </ng-template>
+
+      <div *ngIf="emailCtrl.errors?.['emailExists']">
+        {{ "EmailExists" | translate }}
+      </div>
+    </ng-container>
   </div>
 
   <div>
-    <label>password</label>
+    <label>{{ "Password" | translate }}</label>
     <input
       data-cy="password-input-registration"
       type="password"
@@ -67,50 +73,50 @@
     <div
       *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['required']; else passwordInvalidBlock"
     >
-      Password is required
+      {{ "PasswordRequired" | translate }}
     </div>
     <ng-template #passwordInvalidBlock>
       <div
         *ngIf="passwordCtrl.touched &&  passwordCtrl.errors?.['passwordInvalid']"
       >
-        Password is invalid
+        {{ "PasswordError" | translate }}
       </div>
     </ng-template>
   </div>
 
   <div>
-    <label>confirmation password</label>
+    <label>{{ "ConfirmPassword" | translate }}</label>
     <input
       data-cy="confirmationPassword-input-registration"
       type="password"
       [formControl]="confirmationPasswordCtrl"
     />
-    <div
-      *ngIf="confirmationPasswordCtrl.touched && confirmationPasswordCtrl.errors?.['required']; else confirmationPasswordInvalidBlock"
-    >
-      Confirmation password is required
-    </div>
-    <ng-template #confirmationPasswordInvalidBlock>
+    <ng-container *ngIf="confirmationPasswordCtrl.touched">
       <div
-        *ngIf="confirmationPasswordCtrl.touched &&  confirmationPasswordCtrl.errors?.['passwordInvalid']; else passwordsAreNotTheSameBlock"
+        *ngIf="confirmationPasswordCtrl.errors?.['required']; else confirmationPasswordInvalidBlock"
       >
-        Confirmation password is invalid
+        {{ "ConfirmPasswordRequired" | translate }}
       </div>
-
-      <ng-template #passwordsAreNotTheSameBlock>
+      <ng-template #confirmationPasswordInvalidBlock>
         <div
-          *ngIf="confirmationPasswordCtrl.touched &&  loginFormGroup.errors?.['passwordsAreNotTheSame']"
+          *ngIf="confirmationPasswordCtrl.errors?.['passwordInvalid']; else passwordsAreNotTheSameBlock"
         >
-          Password and confirm password are not the same
+          {{ "PasswordError" | translate }}
         </div>
+
+        <ng-template #passwordsAreNotTheSameBlock>
+          <div *ngIf="loginFormGroup.errors?.['passwordsAreNotTheSame']">
+            {{ "PasswordsAreNotSame" | translate }}
+          </div>
+        </ng-template>
       </ng-template>
-    </ng-template>
+    </ng-container>
   </div>
 
   <button
     data-cy="submit-button-registration"
     [disabled]="loginFormGroup.invalid"
   >
-    Submit
+    {{ "Registration" | translate }}
   </button>
 </form>
