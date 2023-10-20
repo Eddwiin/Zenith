@@ -1,28 +1,29 @@
-import { Injectable } from "@angular/core"
-import { AbstractControl } from "@angular/forms"
-import { map, of } from "rxjs"
-import { AuthService } from "../../services/auth/auth.service"
+import { inject } from "@angular/core";
+import { AbstractControl } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { first, map, of } from "rxjs";
+import { emailExistsStart } from "../../store/actions/registration.action";
+import { selectEmailExists } from "../../store/selectors/email.selector";
 
-@Injectable({
-     providedIn: 'root'
-})
-export class EmailValidatorService {
-     static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      checkIfEmailMatchWithRegex(emailControl: AbstractControl) {
-          return EmailValidatorService.EMAIL_REGEX.test(emailControl.value) 
-                    ? null : { emailFormatInvalid: true }
-     }
-
-     checkIfEmailExists(authService: AuthService) {
-          return (control: AbstractControl) => {
-               const emailValidatorIsInvalid = control.invalid
-               if (emailValidatorIsInvalid) return of(null);
-
-               return authService.checkEmailExists(control.value).pipe(
-                    map(isExist => isExist ? { emailExists: true } : null)
-               )
-          }
-     }
+export const checkIfEmailMatchWithRegex = (emailControl: AbstractControl) => {
+     return EMAIL_REGEX.test(emailControl.value) ? null : { emailFormatInvalid: true }
 }
 
+export const checkIfEmailExists = (
+          store = inject(Store)
+     ) => {
+     return (control: AbstractControl) => {
+          const emailValidatorIsInvalid = control.invalid
+
+          if (emailValidatorIsInvalid) return of(null);
+
+          store.dispatch(emailExistsStart({ payload: control.value }))
+
+          return store.select(selectEmailExists).pipe(
+               map(isExist => isExist ? { emailExists: true } : null),
+               first()
+          )
+     }
+}

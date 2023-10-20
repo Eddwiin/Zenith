@@ -1,14 +1,15 @@
 import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideLocationMocks } from '@angular/common/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { importTranslateService } from 'src/app/app.config';
 import { routes } from 'src/app/app.routes';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { RegistrationComponent } from './registration.component';
+import RegistrationComponent from './registration.component';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -18,7 +19,7 @@ describe('RegistrationComponent', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [RegistrationComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter(routes), provideLocationMocks()]
+      providers: [provideHttpClient(), provideRouter(routes), provideLocationMocks(), importTranslateService, provideMockStore({})]
     });
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
@@ -204,7 +205,7 @@ describe('RegistrationComponent', () => {
     })
 
     it('should call createAccount from authService', () => {
-      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of({}))
+      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of(true))
       const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
 
       formBtnEl.triggerEventHandler('ngSubmit', null);
@@ -213,3 +214,4 @@ describe('RegistrationComponent', () => {
     })
   })
 });
+

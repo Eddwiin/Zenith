@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "cypress": "npx cypress open",
     "cypress:tags": "npx cypress run -e TAGS=$TAGS --headed",
-    "test": "ng test"
+    "test": "ng test --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@ngrx/effects": "^16.3.0",
+    "@ngrx/store": "^16.3.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "rxjs": "~7.8.0",
@@ -32,6 +34,7 @@
     "@angular/compiler-cli": "^16.2.0",
     "@badeball/cypress-cucumber-preprocessor": "^18.0.6",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "@ngrx/store-devtools": "^16.3.0",
     "@types/jasmine": "~4.3.0",
     "cypress": "^13.3.0",
     "jasmine-core": "~4.6.0",

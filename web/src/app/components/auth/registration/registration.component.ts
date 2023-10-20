@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import PATH_CONFIG from 'src/app/core/enums/path.enum';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { EmailValidatorService } from 'src/app/core/validators/email/email.validator';
+import * as EmailValidator from 'src/app/core/validators/email/email.validator';
 import { PasswordValidatorService } from 'src/app/core/validators/password/password-validator.service';
 
 const LOGIN_FORM_KEYS = {
@@ -24,9 +24,8 @@ const LOGIN_FORM_KEYS = {
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit{
+export default class RegistrationComponent implements OnInit{
   router = inject(Router);
-  emailValidator = inject(EmailValidatorService)
   passwordValidor = inject(PasswordValidatorService);
   authService = inject(AuthService)
   destroyRef = inject(DestroyRef);
@@ -41,8 +40,8 @@ export class RegistrationComponent implements OnInit{
   })
 
   emailCtrl = new FormControl('', {
-    validators: [Validators.required,this.emailValidator.checkIfEmailMatchWithRegex],
-    asyncValidators: [this.emailValidator.checkIfEmailExists(inject(AuthService))]
+    validators: [Validators.required, EmailValidator.checkIfEmailMatchWithRegex],
+    asyncValidators: [EmailValidator.checkIfEmailExists()]
   })
 
   passwordCtrl = new FormControl('', {

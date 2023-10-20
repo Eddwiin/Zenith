@@ -9,10 +9,10 @@ export class AuthService {
   http = inject(HttpClient);
 
   checkEmailExists(email: string) {
-    return this.http.get('api/auth/checkEmailExists').pipe(map(() => false), catchError(() => of(false)))
+    return this.http.get(`api/auth/checkEmailExists?email=${email}`).pipe(map(() => false), catchError(() => of(false)))
   }
 
   createAccount() {
-    return this.http.post('api/auth/createAccount', null)
+    return this.http.post<boolean>('api/auth/createAccount', null)
   }
 }
