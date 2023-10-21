@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
-import PATH_CONFIG from 'src/app/core/enums/path.enum';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import * as EmailValidator from 'src/app/core/validators/email/email.validator';
-import { PasswordValidatorService } from 'src/app/core/validators/password/password-validator.service';
+import { UserWithoutId } from '@zenith/core/models/user';
+import { AuthService } from '@zenith/core/services/auth/auth.service';
+import { createAccountStart } from '@zenith/core/store/actions/registration.action';
+import * as EmailValidator from '@zenith/core/validators/email/email.validator';
+import { PasswordValidatorService } from '@zenith/core/validators/password/password-validator.service';
+import { Subject } from 'rxjs';
 
 const LOGIN_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
@@ -25,11 +26,11 @@ const LOGIN_FORM_KEYS = {
   styleUrls: ['./registration.component.scss']
 })
 export default class RegistrationComponent implements OnInit{
-  router = inject(Router);
   passwordValidor = inject(PasswordValidatorService);
   authService = inject(AuthService)
   destroyRef = inject(DestroyRef);
   destroyed = new Subject();
+  store = inject(Store)
 
   firstNameCtrl = new FormControl('', {
     validators: [Validators.required, Validators.minLength(2)]
@@ -70,11 +71,15 @@ export default class RegistrationComponent implements OnInit{
   }
 
   onSubmit() {
-    this.authService.createAccount()
-    .pipe(takeUntil(this.destroyed))
-    .subscribe({
-      next: () => this.router.navigateByUrl(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`),
-      error: () => this.router.navigateByUrl(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`)
-    });
+    if (this.loginFormGroup.invalid) return;
+
+    const userToSave: UserWithoutId = {
+      firstName: this.firstNameCtrl.getRawValue() as string,
+      lastName: this.lastNameCtrl.getRawValue() as string,
+      email: this.emailCtrl.getRawValue() as string,
+      password: this.passwordCtrl.getRawValue() as string
+    }
+
+    this.store.dispatch(createAccountStart({ payload: userToSave}))
   }
 }

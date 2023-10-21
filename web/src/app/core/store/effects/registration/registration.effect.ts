@@ -1,8 +1,12 @@
 import { inject } from "@angular/core";
+import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, mergeMap, of } from "rxjs";
-import { AuthService } from "../../../services/auth/auth.service";
-import * as RegistrationAction from "../../actions/registration.action";
+import { TranslateService } from "@ngx-translate/core";
+import PATH_CONFIG from "@zenith/core/enums/path.enum";
+import { AuthService } from "@zenith/core/services/auth/auth.service";
+import * as RegistrationAction from "@zenith/core/store/actions/registration.action";
+import { ToastrService } from "ngx-toastr";
+import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 
 export const checkEmailExists$ = createEffect(
     (
@@ -25,7 +29,7 @@ export const checkEmailExists$ = createEffect(
 export const createAccount$ = createEffect(
     (
         actions$ = inject(Actions),
-        authService = inject(AuthService)
+        authService = inject(AuthService),
     ) => {
         return actions$.pipe(
             ofType(RegistrationAction.createAccountStart),
@@ -38,4 +42,43 @@ export const createAccount$ = createEffect(
         )
     },
     { functional: true }
+)
+
+export const createAccountSuccess$ = createEffect(
+    (
+        actions$ = inject(Actions),
+        router = inject(Router),
+        toastr = inject(ToastrService),
+        translateService = inject(TranslateService)
+    ) => {
+        return actions$.pipe(
+            ofType(RegistrationAction.createAccountSuccess),
+            tap(() => {
+                const successTitle = translateService.instant('Succcess');
+                const successMessage = translateService.instant('AccountCreated')
+                toastr.success(successMessage, successTitle)
+                router.navigateByUrl(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`)
+            })
+        )
+    },
+    { functional: true, dispatch: false},
+)
+
+export const createAccountFail$ = createEffect(
+    (
+        actions$ = inject(Actions),
+        toastr = inject(ToastrService),
+        translateService = inject(TranslateService)
+    ) => {
+        return actions$.pipe(
+            ofType(RegistrationAction.createAccountFail),
+            tap(action => {
+                const errorTitle = translateService.instant('Error');
+                const errorMessage = translateService.instant('SomethingWrong')
+                console.error(action.err);
+                toastr.error(errorMessage, errorTitle)
+            })
+        )
+    },
+    { functional: true, dispatch: false }
 )

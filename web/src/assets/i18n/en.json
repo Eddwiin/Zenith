@@ -15,5 +15,8 @@
     "EmailError": "The email is not valid",
     "EmailExists": "The email already exists",
     "PasswordError": "The password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
-    "PasswordsAreNotSame": "Passwords are not the same"
+    "PasswordsAreNotSame": "Passwords are not the same",
+    "Success": "Success",
+    "AccountCreated": "The account has been created.",
+    "SomethingWrong": "An unexpected error has occurred! Try again in a few minutes."
 }

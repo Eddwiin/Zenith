@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { UserWithoutId } from '../../models/user';
+import { UserWithoutId } from '@zenith/app/core/models/user';
 
 type ErrorAPI = { err: unknown, statusCode: number }
 

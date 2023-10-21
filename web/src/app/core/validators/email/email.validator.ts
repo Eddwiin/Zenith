@@ -1,9 +1,9 @@
 import { inject } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 import { Store } from "@ngrx/store";
+import { emailExistsStart } from "@zenith/core/store/actions/registration.action";
+import { selectEmailExists } from "@zenith/core/store/selectors/email.selector";
 import { first, map, of } from "rxjs";
-import { emailExistsStart } from "../../store/actions/registration.action";
-import { selectEmailExists } from "../../store/selectors/email.selector";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -15,9 +15,7 @@ export const checkIfEmailExists = (
           store = inject(Store)
      ) => {
      return (control: AbstractControl) => {
-          const emailValidatorIsInvalid = control.invalid
-
-          if (emailValidatorIsInvalid) return of(null);
+          if (control.invalid) return of(null);
 
           store.dispatch(emailExistsStart({ payload: control.value }))
 

@@ -1,11 +1,11 @@
 import { createReducer, on } from "@ngrx/store"
-import * as RegistrationAction from "../../actions/registration.action"
+import * as RegistrationAction from "@zenith/core/store/actions/registration.action"
 
 export interface RegistrationState {
     emailExists: boolean
 }
 
-const initialState: RegistrationState = {
+export const initialState: RegistrationState = {
     emailExists: false
 }
 

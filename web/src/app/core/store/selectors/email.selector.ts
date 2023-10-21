@@ -1,6 +1,6 @@
 import { createSelector } from "@ngrx/store";
-import { RegistrationState } from "../reducers/registration/registration.reducer";
-import { AppState } from "../store.config";
+import { RegistrationState } from "@zenith/core/store/reducers/registration/registration.reducer";
+import { AppState } from "@zenith/core/store/store.config";
 
 export const selectRegistration = (state: AppState) => state.registration;
 
