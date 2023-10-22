@@ -34,9 +34,9 @@ export const createAccount$ = createEffect(
     ) => {
         return actions$.pipe(
             ofType(RegistrationAction.createAccountStart),
-            mergeMap(() => 
-                authService.createAccount().pipe(
-                    map(isCreated => isCreated ? RegistrationAction.createAccountSuccess() : RegistrationAction.createAccountFail({ err: isCreated, statusCode: 500})),
+            mergeMap((action) => 
+                authService.createAccount(action.payload).pipe(
+                    map(isCreated => isCreated ? RegistrationAction.createAccountSuccess() : RegistrationAction.createAccountFail({ err: { isCreated }, statusCode: 500})),
                     catchError(err => of(RegistrationAction.createAccountFail({ err, statusCode: 500})))
                 )
             )

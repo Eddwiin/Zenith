@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { UserWithoutId } from '@zenith/core/models/user';
 import { catchError, map, of } from 'rxjs';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
     return this.http.get(`api/auth/checkEmailExists?email=${email}`).pipe(map(() => false), catchError(() => of(false)))
   }
 
-  createAccount() {
-    return this.http.post<boolean>('api/auth/createAccount', null)
+  createAccount(userToSave: UserWithoutId) {
+    return this.http.post<boolean>('api/auth/createAccount', userToSave)
   }
 }
