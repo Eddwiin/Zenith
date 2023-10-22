@@ -17,7 +17,7 @@ export const checkEmailExists$ = createEffect(
             ofType(RegistrationAction.emailExistsStart),
             exhaustMap((action) => 
                 authService.checkEmailExists(action.payload).pipe(
-                    map((isEmailExists) => RegistrationAction.emailExistsSuccess({ payload: isEmailExists})),
+                    map((isEmailExists) => RegistrationAction.emailExistsSuccess({ payload: isEmailExists })),
                     catchError(err => of(RegistrationAction.emailExistsFail({ err, statusCode: 500 })))
                 )
             )
@@ -25,6 +25,7 @@ export const checkEmailExists$ = createEffect(
     },
     { functional: true}
 )
+
 
 export const createAccount$ = createEffect(
     (

@@ -73,13 +73,17 @@ export default class RegistrationComponent implements OnInit{
   onSubmit() {
     if (this.loginFormGroup.invalid) return;
 
-    const userToSave: UserWithoutId = {
-      firstName: this.firstNameCtrl.getRawValue() as string,
-      lastName: this.lastNameCtrl.getRawValue() as string,
-      email: this.emailCtrl.getRawValue() as string,
-      password: this.passwordCtrl.getRawValue() as string
-    }
+    const userToSave = this.getUserFormatted(this.firstNameCtrl, this.lastNameCtrl, this.emailCtrl, this.passwordCtrl);
 
     this.store.dispatch(createAccountStart({ payload: userToSave}))
+  }
+
+  getUserFormatted(firstNameCtrl: FormControl, lastNameCtrl: FormControl, emailCtrl: FormControl, passwordCtrl: FormControl) {
+    return {
+      firstName: firstNameCtrl.getRawValue() as string,
+      lastName: lastNameCtrl.getRawValue() as string,
+      email: emailCtrl.getRawValue() as string,
+      password: passwordCtrl.getRawValue() as string
+    } as UserWithoutId
   }
 }

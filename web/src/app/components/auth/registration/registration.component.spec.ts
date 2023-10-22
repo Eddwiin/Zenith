@@ -7,8 +7,8 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { importTranslateService } from '@zenith/app/app.config';
 import { routes } from '@zenith/app/app.routes';
 import { AuthService } from '@zenith/core/services/auth/auth.service';
-import { emailExistsStart } from '@zenith/core/store/actions/registration.action';
-import { RegistrationState, initialState as registrationInitialState } from '@zenith/core/store/reducers/registration/registration.reducer';
+import { createAccountStart, emailExistsStart } from '@zenith/core/store/actions/registration.action';
+import { RegistrationState, registrationReducer } from '@zenith/core/store/reducers/registration/registration.reducer';
 import { of } from 'rxjs';
 import RegistrationComponent from './registration.component';
 
@@ -17,7 +17,9 @@ describe('RegistrationComponent', () => {
   let fixture: ComponentFixture<RegistrationComponent>;
   let authService: AuthService;
   let mockStore: MockStore<RegistrationState>
-  const initialState = {...registrationInitialState};
+  const initialState = {
+    registration: registrationReducer
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -201,7 +203,7 @@ describe('RegistrationComponent', () => {
       fixture.detectChanges();
     })
 
-    xit('should disable submit button when loginFormGroup is invalid', () => {
+    it('should disable submit button when loginFormGroup is invalid', () => {
       component.confirmationPasswordCtrl?.patchValue('Azert')
       fixture.detectChanges();
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
@@ -209,19 +211,20 @@ describe('RegistrationComponent', () => {
       expect(submitBtnEl.nativeElement.disabled).toBeTrue();
     })
 
-    xit('should active submit button when loginFormGroup is valid', () => {
+    it('should active submit button when loginFormGroup is valid', () => {
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeFalse();
     })
 
-    xit('should call createAccount from authService', () => {
-      const createAccountSpy = spyOn(component.authService, 'createAccount').and.callFake(() => of(true))
-      const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
+    it('should dispatch createAccountStart', () => {
+      const dispatchSpy = spyOn(mockStore, 'dispatch');
+      const expected = component.getUserFormatted(component.firstNameCtrl, component.lastNameCtrl, component.emailCtrl, component.passwordCtrl)
 
+      const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
       formBtnEl.triggerEventHandler('ngSubmit', null);
       
-      expect(createAccountSpy).toHaveBeenCalled();
+      expect(dispatchSpy).toHaveBeenCalledOnceWith(createAccountStart({ payload: expected}))
     })
   })
 });
