@@ -29,6 +29,7 @@ export const toastrMessageError$ = createEffect(
     ) => actions$.pipe(
         ofType(ToastrActions.toastrMessageError),
         tap(() => {
+            console.log("TOASTR ERROR ACCOUNT")
             const errorTitle = translateService.instant('Error');
             const errorMessage = translateService.instant('SomethingWrong')
 

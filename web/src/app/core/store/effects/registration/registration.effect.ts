@@ -50,7 +50,7 @@ export const createAccountSuccess$ = createEffect(
             map(() => ToastrActions.toastrMessageSuccess()),
             tap(() => router.navigateByUrl(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`))
         ),
-    { functional: true, dispatch: false},
+    { functional: true },
 )
 
 export const createAccountFail$ = createEffect(
@@ -62,5 +62,5 @@ export const createAccountFail$ = createEffect(
             map(action => ToastrActions.toastrMessageError({ err: action.err}))
         )
     },
-    { functional: true, dispatch: false }
+    { functional: true }
 )

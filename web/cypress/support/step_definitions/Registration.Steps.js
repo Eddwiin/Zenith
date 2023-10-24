@@ -29,27 +29,43 @@ When('I type a confirmation password with {} - Registration', (confirmationPassw
 })
 
 When('I click on submit button - Registration', () => {
+    mockAccountCreated()
     Registration_PO.clickOnSubmitBtn();
 })
 
-Then('I am redirect to {} with the message {} and the status code {} - Registration', (urlToRedirect, expectedMessage, statusCode) => {
+Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, expectedMessage) => {
     cy.url().should('include', urlToRedirect);
     cy.get('body').contains(expectedMessage);
 })
 
 
-
 // EMAIL EXISTS
 When('I type an email with {} - Registration Email Exists', (email) => {
     mockEmailExists()
+    cy.wait(200);
     Registration_PO.typeEmail(email);
 })
 
 
-const mockEmailExists = (statusCode = 200) => {
+// Error server 
+When('I click on submit button - Registration Error Server', () => {
+    mockAccountCreated(500, false);
+    
+    Registration_PO.clickOnSubmitBtn();
+})
+
+// MOCKS
+const mockEmailExists = () => {
     cy.intercept('GET', `/api/auth/checkEmailExists?email=*`, {
-        statusCode,
+        statusCode: 200,
         body: true  
-    })
+    }).as('mockEmailExists', { timeout: 10000 })
 }
  
+
+const mockAccountCreated = (statusCode = 200, body = true) => {
+    cy.intercept('POST', '/api/auth/createAccount', {
+        statusCode,
+        body
+    })
+}

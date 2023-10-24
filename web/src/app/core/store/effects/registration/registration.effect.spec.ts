@@ -2,7 +2,6 @@ import { provideHttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { Router, provideRouter } from "@angular/router";
 import { Action } from "@ngrx/store";
-import { TranslateService } from "@ngx-translate/core";
 import { importTranslateService } from "@zenith/app/app.config";
 import { routes } from "@zenith/app/app.routes";
 import authServiceMock from "@zenith/app/shared/tests/services/auth-mock.service";
@@ -10,14 +9,12 @@ import PATH_CONFIG from "@zenith/core/enums/path.enum";
 import { UserWithoutId } from "@zenith/core/models/user";
 import * as RegistrationAction from "@zenith/core/store/actions/registration.action";
 import * as ToastrActions from '@zenith/core/store/actions/toastr.action';
-import { ToastrService, provideToastr } from "ngx-toastr";
+import { provideToastr } from "ngx-toastr";
 import { Observable, of, throwError } from "rxjs";
 import { checkEmailExists$, createAccount$, createAccountFail$, createAccountSuccess$ } from "./registration.effect";
 
 describe('Registration effect', () => {
-    let toastr: ToastrService;
     let router: Router;
-    let translateService: TranslateService
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -29,9 +26,7 @@ describe('Registration effect', () => {
             ]
         })
 
-        toastr = TestBed.inject(ToastrService),
         router = TestBed.inject(Router);
-        translateService = TestBed.inject(TranslateService)
     })
     
     describe('checkEmailExists$', () => {

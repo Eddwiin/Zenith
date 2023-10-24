@@ -11,6 +11,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
 import * as RegistrationEffect from './core/store/effects/registration/registration.effect';
+import * as ToastrEffect from './core/store/effects/toastr/toastr.effect';
 import { registrationReducer } from './core/store/reducers/registration/registration.reducer';
 
 function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
@@ -34,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       registration: registrationReducer
     }),
-    provideEffects(RegistrationEffect),
+    provideEffects(RegistrationEffect, ToastrEffect),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode
