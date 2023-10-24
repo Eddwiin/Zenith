@@ -1,0 +1,23 @@
+{
+    "FirstName": "Prénom",
+    "LastName": "Nom",
+    "Email": "Mail",
+    "Password": "Mot de passe",
+    "ConfirmPassword": "Confirmer votre mot de passe",
+    "Registration": "S'inscrire",
+    "FirstNameRequired": "Le prénom est obligatoire",
+    "LastNameRequired": "Le nom est obligatoire",
+    "EmailRequired": "Le mail est obligatoire",
+    "PasswordRequired": "Le mot de passe est obligatoire",
+    "ConfirmPasswordRequired": "La confirmation de mot de passe est obligatoire",
+    "FirstNameError": "Le prénom doit contenir au moins deux caractères",
+    "LastNameError": "Le nom doit contenir au moins deux caractères",
+    "EmailError": "Le mail n'est pas valide",
+    "EmailExists": "Le mail existe déjà",
+    "PasswordError": "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
+    "PasswordsAreNotSame": "Les mots de passe ne sont pas identiques",
+    "Success": "Succès",
+    "Error": "Erreur",
+    "AccountCreated": "Le compte a été créé !",
+    "SomethingWrong": "Une erreur inattendu s'est produite ! Réessayer dans quelques minutes"
+}

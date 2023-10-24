@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'zth-root',
@@ -11,4 +12,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'web';
+  translate = inject(TranslateService)
+
+  constructor() {
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
 }

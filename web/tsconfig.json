@@ -22,12 +22,24 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@zenith/components/*": ["./src/app/components/*"],
+      "@zenith/core/*": ["./src/app/core/*"],
+      "@zenith/app/*": ["./src/app/*"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": [
+    "src",
+    "node_modules/cypress"
+],
+"exclude": [
+    "node_modules/cypress"
+]
 }
