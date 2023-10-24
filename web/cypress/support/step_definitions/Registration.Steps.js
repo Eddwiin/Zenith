@@ -3,6 +3,7 @@ const { default: RegistrationPO } = require("../page_objects/Registration_PO");
 
 const Registration_PO = new RegistrationPO();
 
+// SCENEARIO OUTTLINE
 Given('I navigate to registration page - Registration', () => {
     Registration_PO.navigateToSignUpPage();
 })
@@ -31,26 +32,24 @@ When('I click on submit button - Registration', () => {
     Registration_PO.clickOnSubmitBtn();
 })
 
-Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, expectedMessage) => {
-    if (expectedMessage.includes('Email') && expectedMessage.includes('exists')) {
-        mockEmailExists()
-        cy.wait('@emailExists').then(() => {})
-    }
-  
+Then('I am redirect to {} with the message {} and the status code {} - Registration', (urlToRedirect, expectedMessage, statusCode) => {
     cy.url().should('include', urlToRedirect);
     cy.get('body').contains(expectedMessage);
 })
 
-const mockEmailExists = () => {
-    cy.intercept({
-        method: 'GET',
-        url: 'api/auth/checkEmailExists'
-    }).as("emailExists")
-}
 
-// const mockAccountCreate = () => {
-//    cy.intercept({
-//         method: 'POST',
-//         url: 'api/auth/createAccount',
-//    }, { created: true }).as('createAccountSuccess')
-// }
+
+// EMAIL EXISTS
+When('I type an email with {} - Registration Email Exists', (email) => {
+    mockEmailExists()
+    Registration_PO.typeEmail(email);
+})
+
+
+const mockEmailExists = (statusCode = 200) => {
+    cy.intercept('GET', `/api/auth/checkEmailExists?email=*`, {
+        statusCode,
+        body: true  
+    })
+}
+ 

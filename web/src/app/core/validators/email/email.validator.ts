@@ -18,7 +18,7 @@ export const checkIfEmailExists = (
           if (control.invalid) return of(null);
 
           store.dispatch(emailExistsStart({ payload: control.value }))
-
+          
           return store.select(selectEmailExists).pipe(
                map(isExist => isExist ? { emailExists: true } : null),
                first()

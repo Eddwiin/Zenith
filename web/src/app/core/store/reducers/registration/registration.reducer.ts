@@ -12,5 +12,5 @@ export const initialState: RegistrationState = {
 export const registrationReducer = createReducer(
     initialState,
     on(RegistrationAction.emailExistsSuccess, 
-        (state, action) => ({...state, emailExists: action.payload}))
+        (state, action) => ({...state, emailExists: action.payload }))
 )

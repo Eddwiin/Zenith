@@ -6,7 +6,7 @@ import PATH_CONFIG from "@zenith/core/enums/path.enum";
 import { AuthService } from "@zenith/core/services/auth/auth.service";
 import * as RegistrationAction from "@zenith/core/store/actions/registration.action";
 import { ToastrService } from "ngx-toastr";
-import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
+import { catchError, debounceTime, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 
 export const checkEmailExists$ = createEffect(
     (
@@ -35,10 +35,10 @@ export const createAccount$ = createEffect(
         return actions$.pipe(
             ofType(RegistrationAction.createAccountStart),
             mergeMap((action) => 
-                authService.createAccount(action.payload).pipe(
+              authService.createAccount(action.payload).pipe(
                     map(isCreated => isCreated ? RegistrationAction.createAccountSuccess() : RegistrationAction.createAccountFail({ err: { isCreated }, statusCode: 500})),
                     catchError(err => of(RegistrationAction.createAccountFail({ err, statusCode: 500})))
-                )
+                )  
             )
         )
     },
@@ -54,6 +54,7 @@ export const createAccountSuccess$ = createEffect(
     ) => {
         return actions$.pipe(
             ofType(RegistrationAction.createAccountSuccess),
+            debounceTime(1000),
             tap(() => {
                 const successTitle = translateService.instant('Succcess');
                 const successMessage = translateService.instant('AccountCreated')
