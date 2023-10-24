@@ -9,9 +9,10 @@ import authServiceMock from "@zenith/app/shared/tests/services/auth-mock.service
 import PATH_CONFIG from "@zenith/core/enums/path.enum";
 import { UserWithoutId } from "@zenith/core/models/user";
 import * as RegistrationAction from "@zenith/core/store/actions/registration.action";
+import * as ToastrActions from '@zenith/core/store/actions/toastr.action';
 import { ToastrService, provideToastr } from "ngx-toastr";
 import { Observable, of, throwError } from "rxjs";
-import { checkEmailExists$, createAccount$, createAccountSuccess$ } from "./registration.effect";
+import { checkEmailExists$, createAccount$, createAccountFail$, createAccountSuccess$ } from "./registration.effect";
 
 describe('Registration effect', () => {
     let toastr: ToastrService;
@@ -125,19 +126,15 @@ describe('Registration effect', () => {
         })
 
         it('should call toast service with success message', () => {
-            const toastrSuccesSpy = spyOn(toastr, 'success');
-            const successTitle = translateService.instant('Succcess');
-            const successMessage = translateService.instant('AccountCreated')
-
-            createAccountSuccess$(actionsMock$,router,toastr,translateService).subscribe(() => {
-                expect(toastrSuccesSpy).toHaveBeenCalledOnceWith(successMessage, successTitle)
+            createAccountSuccess$(actionsMock$,router).subscribe((action) => {
+                expect(action).toEqual(ToastrActions.toastrMessageSuccess())
             })
         })
 
         it('should redirect to login page', () => {
             const navigateByUrlSpy = spyOn(router, 'navigateByUrl');
 
-            createAccountSuccess$(actionsMock$,router,toastr,translateService).subscribe(() => {
+            createAccountSuccess$(actionsMock$,router).subscribe(() => {
                 expect(navigateByUrlSpy).toHaveBeenCalledOnceWith(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`)    
             })
         })
@@ -151,13 +148,9 @@ describe('Registration effect', () => {
             actionsMock$ = of(RegistrationAction.createAccountFail({ err: null, statusCode: 500}))
         })
 
-        it('should call toast service with error message', () => {
-            const toastrSuccesSpy = spyOn(toastr, 'error');
-            const errorTitle = translateService.instant('Error');
-            const errorMessage = translateService.instant('SomethingWrong')
-
-            createAccountSuccess$(actionsMock$,router,toastr,translateService).subscribe(() => {
-                expect(toastrSuccesSpy).toHaveBeenCalledOnceWith(errorMessage, errorTitle)
+        it('should call toastrMessageError action', () => {
+            createAccountFail$(actionsMock$).subscribe((action) => {
+                expect(action).toEqual(ToastrActions.toastrMessageError({ err: action.err}))
             })
         })
     })
