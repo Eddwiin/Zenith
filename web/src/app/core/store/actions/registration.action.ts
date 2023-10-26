@@ -21,8 +21,8 @@ export const CREATE_ACCOUNT_ACTIONS = createActionGroup({
     }
 })
 
-export const { emailExistsStart, emailExistsSuccess, emailExistsFail } = CHECK_EMAIL_EXISTS_ACTIONS
-export const { createAccountStart, createAccountSuccess, createAccountFail } = CREATE_ACCOUNT_ACTIONS;
+export const {emailExistsStart, emailExistsSuccess, emailExistsFail} = CHECK_EMAIL_EXISTS_ACTIONS
+export const {createAccountStart, createAccountSuccess, createAccountFail} = CREATE_ACCOUNT_ACTIONS;
 
 
 

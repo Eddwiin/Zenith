@@ -2,7 +2,7 @@ import * as RegistrationAction from '@zenith/core/store/actions/registration.act
 import { registrationReducer, RegistrationState } from './registration.reducer';
 
 describe('Registration reducer', () => {
-    let initialState: RegistrationState | {} = {}
+    let initialState: RegistrationState = { emailExists: false }
 
     beforeEach(() => {
         initialState = {

@@ -63,7 +63,7 @@ export default class RegistrationComponent implements OnInit{
     validators: [this.passwordValidor.checkPasswordsAreTheSame(LOGIN_FORM_KEYS.passwordCtrl, LOGIN_FORM_KEYS.confirmationPasswordCtrl)]
   })
 
-  ngOnInit() {    
+  ngOnInit(){    
     this.destroyRef.onDestroy(() => {
       this.destroyed.next(null);
       this.destroyed.complete();
