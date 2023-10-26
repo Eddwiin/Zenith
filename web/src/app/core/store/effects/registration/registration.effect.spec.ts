@@ -82,7 +82,7 @@ describe('Registration effect', () => {
         it('should call createAccount from authService when action is createAccountStart', () => {
             const createAccountSpy = spyOn(authServiceMock, 'createAccount').and.callFake(() => of(true))
 
-            createAccount$(actionsMock$, authServiceMock).subscribe(action => {
+            createAccount$(actionsMock$, authServiceMock).subscribe(() => {
                 expect(createAccountSpy).toHaveBeenCalledOnceWith(payload);
             })
         })

@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
-
 import BasePO from "./Base_PO";
-
 
 class RegistrationPO extends BasePO {
     firstNameSelector = '[data-cy="firstName-input-registration"]';

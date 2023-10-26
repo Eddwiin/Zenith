@@ -4,8 +4,9 @@
   data-cy="loginFormGroup-registration"
 >
   <div>
-    <label>{{ "FirstName" | translate }}</label>
+    <label for="firstName-input-registration">{{ "FirstName" | translate }}</label>
     <input
+      name="firstName-input-registration"
       data-cy="firstName-input-registration"
       type="text"
       [formControl]="firstNameCtrl"
@@ -22,8 +23,9 @@
   </div>
 
   <div>
-    <label>{{ "LastName" | translate }}</label>
+    <label for="lastName-input-registration">{{ "LastName" | translate }}</label>
     <input
+      name="lastName-input-registration"
       data-cy="lastName-input-registration"
       type="text"
       [formControl]="lastNameCtrl"
@@ -40,8 +42,9 @@
   </div>
 
   <div>
-    <label>{{ "Email" | translate }}</label>
+    <label for="email-input-registration">{{ "Email" | translate }}</label>
     <input
+      name="email-input-registration"
       data-cy="email-input-registration"
       type="email"
       [formControl]="emailCtrl"
@@ -64,8 +67,9 @@
   </div>
 
   <div>
-    <label>{{ "Password" | translate }}</label>
+    <label for="password-input-registration">{{ "Password" | translate }}</label>
     <input
+      name="password-input-registration"
       data-cy="password-input-registration"
       type="password"
       [formControl]="passwordCtrl"
@@ -85,8 +89,9 @@
   </div>
 
   <div>
-    <label>{{ "ConfirmPassword" | translate }}</label>
+    <label for="confirmationPassword-input-registration">{{ "ConfirmPassword" | translate }}</label>
     <input
+      name="confirmationPassword-input-registration"
       data-cy="confirmationPassword-input-registration"
       type="password"
       [formControl]="confirmationPasswordCtrl"
