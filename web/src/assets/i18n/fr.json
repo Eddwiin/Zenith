@@ -19,5 +19,7 @@
     "Success": "Succès",
     "Error": "Erreur",
     "AccountCreated": "Le compte a été créé !",
-    "SomethingWrong": "Une erreur inattendu s'est produite ! Réessayer dans quelques minutes"
+    "SomethingWrong": "Une erreur inattendu s'est produite ! Réessayer dans quelques minutes",
+    "SuccessfulConnection": "Vous êtes connecté !",
+    "ErrorConnection": "Pas authentifié! Vérifiez votre mail ou mot de passe."
 }

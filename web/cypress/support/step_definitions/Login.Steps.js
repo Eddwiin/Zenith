@@ -1,11 +1,25 @@
 const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
+const { default: LoginPO } = require("../page_objects/Login_PO");
 
-Given('I navigate to login page - Login', () => {})
+const Login_PO = new LoginPO();
 
-When('I type an email with {} - Login', (email) => {})
+Given('I navigate to login page - Login', () => {
+    Login_PO.navigateToLoginPage();
+})
 
-When('I type a password with {} - Login', (password) => {})
+When('I type an email with {} - Login', (email) => {
+    Login_PO.typeEmail(email)
+})
 
-When('I click on submit button - Login', () => {})
+When('I type a password with {} - Login', (password) => {
+    Login_PO.typePassword(password)
+})
 
-Then('I am redirect to {} with the message {} - Login', (urlToRedirect, message) => {})
+When('I click on submit button - Login', () => {
+    Login_PO.clickOnSubmitBtn()
+})
+
+Then('I am redirect to {} with the message {} - Login', (urlToRedirect, expectedMessage) => {
+    cy.url().should('include', urlToRedirect);
+    cy.get('body').contains(expectedMessage);
+})

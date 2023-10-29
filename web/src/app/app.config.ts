@@ -10,6 +10,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
+// import * as LoginEffect from './core/store/effects/login/login.effect';
 import * as RegistrationEffect from './core/store/effects/registration/registration.effect';
 import * as ToastrEffect from './core/store/effects/toastr/toastr.effect';
 import { registrationReducer } from './core/store/reducers/registration/registration.reducer';

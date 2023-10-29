@@ -12,9 +12,9 @@ export const toastrMessageSuccess$ = createEffect(
         toastr = inject(ToastrService)
     ) => actions$.pipe(
             ofType(ToastrActions.toastrMessageSuccess),
-            tap(() => {
+            tap((action) => {
                 const successTitle = translateService.instant('Succcess');
-                const successMessage = translateService.instant('AccountCreated')
+                const successMessage = action.payload.message
                 toastr.success(successMessage, successTitle)
             })
         ),
@@ -28,11 +28,9 @@ export const toastrMessageError$ = createEffect(
         toastr = inject(ToastrService)
     ) => actions$.pipe(
         ofType(ToastrActions.toastrMessageError),
-        tap(() => {
-            console.log("TOASTR ERROR ACCOUNT")
+        tap((action) => {
             const errorTitle = translateService.instant('Error');
-            const errorMessage = translateService.instant('SomethingWrong')
-
+            const errorMessage = action.err.message || translateService.instant('SomethingWrong')
             toastr.error(errorMessage, errorTitle)
         })
     ),

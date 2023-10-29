@@ -1,1 +1,28 @@
-<p>login works!</p>
+<form [formGroup]="loginFG" (ngSubmit)="onSubmit()" data-cy="form-group-login">
+  <div>
+    <label for="input-email-login">Email</label>
+    <input
+      data-cy="email-input-login"
+      type="text"
+      name="input-email-login"
+      [formControl]="emailCtrl"
+    />
+  </div>
+
+  <div>
+    <label for="input-password-login">Password</label>
+    <input
+      data-cy="password-input-login"
+      type="password"
+      name="input-password-login"
+      [formControl]="passwordCtrl"
+    />
+  </div>
+  <button
+    data-cy="submit-button-login"
+    [disabled]="loginFG.invalid"
+    data-cy="submit-button-login"
+  >
+    Submit
+  </button>
+</form>

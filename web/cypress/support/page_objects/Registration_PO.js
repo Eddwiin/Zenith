@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 import BasePO from "./Base_PO";
 
 class RegistrationPO extends BasePO {
@@ -6,7 +7,7 @@ class RegistrationPO extends BasePO {
     lastNameSelector = '[data-cy="lastName-input-registration"]';
     emailSelector = '[data-cy="email-input-registration"]';
     passwordSelector = '[data-cy="password-input-registration"]';
-    confirmPasswordSelector = '[data-cy="confirmationPassword-input-registration"]';
+    confirmPasswordSelector = '[data-cy="confirmation-password-input-registration"]';
     submitBtnSelector = '[data-cy="submit-button-registration"]';
 
     navigateToSignUpPage() {

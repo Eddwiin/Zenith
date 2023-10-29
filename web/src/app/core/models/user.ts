@@ -8,3 +8,4 @@ export interface User {
 }
 
 export type UserWithoutId = Omit<User, 'id'>
+export type PickUserEmailAndPassword = Pick<User, 'email' | 'password'>

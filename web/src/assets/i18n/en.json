@@ -18,5 +18,7 @@
     "PasswordsAreNotSame": "Passwords are not the same",
     "Success": "Success",
     "AccountCreated": "The account has been created.",
-    "SomethingWrong": "An unexpected error has occurred! Try again in a few minutes."
+    "SomethingWrong": "An unexpected error has occurred! Try again in a few minutes.",
+    "SuccessfulConnection": "Successful connection !",
+    "ErrorConnection": "Not authentified ! Check your email or password."
 }

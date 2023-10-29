@@ -17,7 +17,17 @@ When('I type a last name with {} - Registration', (lastName) => {
 })
 
 When('I type an email with {} - Registration', (email) => {
-    (email) ? Registration_PO.typeEmail(email) : Registration_PO.touchEmailInput();
+    mockEmailExists().then(() => {
+        (email) ? Registration_PO.typeEmail(email) :  Registration_PO.touchEmailInput();
+    })
+})
+
+// EMAIL EXISTS
+When('I type an email with {} - Registration Email Exists', (email) => {
+    mockEmailExists(200, true).then(() => {
+        Registration_PO.typeEmail(email);
+    })
+
 })
 
 When('I type a password with {} - Registration', (password) => {
@@ -29,43 +39,36 @@ When('I type a confirmation password with {} - Registration', (confirmationPassw
 })
 
 When('I click on submit button - Registration', () => {
-    mockAccountCreated()
-    Registration_PO.clickOnSubmitBtn();
+    mockAccountCreated().then(() => {
+        Registration_PO.clickOnSubmitBtn();
+    })
 })
+
+// Error server 
+When('I click on submit button - Registration Error Server', () => {
+    mockAccountCreated(500, false).then(() => {
+        Registration_PO.clickOnSubmitBtn();
+    });
+})
+
 
 Then('I am redirect to {} with the message {} - Registration', (urlToRedirect, expectedMessage) => {
     cy.url().should('include', urlToRedirect);
     cy.get('body').contains(expectedMessage);
 })
 
-
-// EMAIL EXISTS
-When('I type an email with {} - Registration Email Exists', (email) => {
-    mockEmailExists()
-    cy.wait(200);
-    Registration_PO.typeEmail(email);
-})
-
-
-// Error server 
-When('I click on submit button - Registration Error Server', () => {
-    mockAccountCreated(500, false);
-    
-    Registration_PO.clickOnSubmitBtn();
-})
-
 // MOCKS
-const mockEmailExists = () => {
-    cy.intercept('GET', `/api/auth/checkEmailExists?email=*`, {
-        statusCode: 200,
-        body: true  
-    }).as('mockEmailExists', { timeout: 10000 })
+const mockEmailExists = (statusCode = 200, expectedBody = false) => {
+    return cy.intercept('GET', `/api/auth/checkEmailExists?email=*`, {
+        statusCode: statusCode,
+        body: expectedBody  
+    })
 }
  
 
-const mockAccountCreated = (statusCode = 200, body = true) => {
-    cy.intercept('POST', '/api/auth/createAccount', {
-        statusCode,
-        body
+const mockAccountCreated = (statusCode = 200, expectedBody = true) => {
+    return cy.intercept('POST', '/api/auth/createAccount', {
+        statusCode: statusCode,
+        body: expectedBody
     })
 }
