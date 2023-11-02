@@ -1,4 +1,5 @@
 {
     "baseUrl": "http://localhost:4200/",
-    "registrationUrl": "auth/registration"
+    "registrationUrl": "auth/registration",
+    "loginUrl": "auth/login"
 }

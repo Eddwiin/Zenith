@@ -1,11 +1,46 @@
 const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
+const { default: LoginPO } = require("../page_objects/Login_PO");
 
-Given('I navigate to login page - Login', () => {})
+const Login_PO = new LoginPO();
 
-When('I type an email with {} - Login', (email) => {})
+Given('I navigate to login page - Login', () => {
+    Login_PO.navigateToLoginPage();
+})
 
-When('I type a password with {} - Login', (password) => {})
+When('I type an email with {} - Login', (email) => {
+    (email) ? Login_PO.typeEmail(email): Login_PO.touchEmailInput()
+})
 
-When('I click on submit button - Login', () => {})
+When('I type a password with {} - Login', (password) => {
+    Login_PO.typePassword(password)
+})
 
-Then('I am redirect to {} with the message {} - Login', (urlToRedirect, message) => {})
+When('I click on submit button - Login', () => {
+    mockLoginApi().then(() => {
+        Login_PO.clickOnSubmitBtn()
+    })
+})
+
+When('I click on submit button - Login wrong email or password', () => {
+    mockLoginApi(401).then(() => {
+        Login_PO.clickOnSubmitBtn()
+    })
+})
+
+When('I click on submit button - Login error server', () => {
+    mockLoginApi(500).then(() => {
+        Login_PO.clickOnSubmitBtn()
+    })
+})
+
+Then('I am redirect to {} with the message {} - Login', (urlToRedirect, expectedMessage) => {
+    cy.url().should('include', urlToRedirect);
+    cy.get('body').contains(expectedMessage);
+})
+
+const mockLoginApi = (statusCode = 200, expectedBody = {}) => {
+    return cy.intercept('POST', '/api/auth/login', {
+        statusCode,
+        body: expectedBody
+    })
+}

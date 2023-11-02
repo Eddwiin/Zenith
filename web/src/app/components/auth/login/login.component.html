@@ -1,1 +1,44 @@
-<p>login works!</p>
+<form [formGroup]="loginFG" (ngSubmit)="onSubmit()" data-cy="form-group-login">
+  <div>
+    <label for="input-email-login">{{ "Email" | translate }}</label>
+    <input
+      data-cy="email-input-login"
+      type="text"
+      name="input-email-login"
+      [formControl]="emailCtrl"
+    />
+
+    <ng-container *ngIf="emailCtrl.touched">
+      <div *ngIf="emailCtrl.errors?.['required']; else emailFormatInvalidBlock">
+        {{ "EmailRequired" | translate }}
+      </div>
+      <ng-template #emailFormatInvalidBlock>
+        <div *ngIf="emailCtrl.errors?.['emailFormatInvalid']">
+          {{ "EmailError" | translate }}
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div>
+    <label for="input-password-login">{{ "Password" | translate }}</label>
+    <input
+      data-cy="password-input-login"
+      type="password"
+      name="input-password-login"
+      [formControl]="passwordCtrl"
+    />
+
+    <div *ngIf="passwordCtrl.touched && passwordCtrl.errors?.['required']">
+      {{ "PasswordRequired" | translate }}
+    </div>
+  </div>
+
+  <button
+    data-cy="submit-button-login"
+    [disabled]="loginFG.invalid"
+    data-cy="submit-button-login"
+  >
+    {{ "LoginBtnLabel" | translate }}
+  </button>
+</form>

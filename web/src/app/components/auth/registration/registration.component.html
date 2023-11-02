@@ -1,10 +1,12 @@
 <form
-  [formGroup]="loginFormGroup"
+  [formGroup]="registrationFG"
   (ngSubmit)="onSubmit()"
-  data-cy="loginFormGroup-registration"
+  data-cy="form-group-registration"
 >
   <div>
-    <label for="firstName-input-registration">{{ "FirstName" | translate }}</label>
+    <label for="firstName-input-registration">{{
+      "FirstName" | translate
+    }}</label>
     <input
       name="firstName-input-registration"
       data-cy="firstName-input-registration"
@@ -23,7 +25,9 @@
   </div>
 
   <div>
-    <label for="lastName-input-registration">{{ "LastName" | translate }}</label>
+    <label for="lastName-input-registration">{{
+      "LastName" | translate
+    }}</label>
     <input
       name="lastName-input-registration"
       data-cy="lastName-input-registration"
@@ -67,7 +71,9 @@
   </div>
 
   <div>
-    <label for="password-input-registration">{{ "Password" | translate }}</label>
+    <label for="password-input-registration">{{
+      "Password" | translate
+    }}</label>
     <input
       name="password-input-registration"
       data-cy="password-input-registration"
@@ -89,10 +95,12 @@
   </div>
 
   <div>
-    <label for="confirmationPassword-input-registration">{{ "ConfirmPassword" | translate }}</label>
+    <label for="confirmation-password-input-registration">{{
+      "ConfirmPassword" | translate
+    }}</label>
     <input
-      name="confirmationPassword-input-registration"
-      data-cy="confirmationPassword-input-registration"
+      name="confirmation-password-input-registration"
+      data-cy="confirmation-password-input-registration"
       type="password"
       [formControl]="confirmationPasswordCtrl"
     />
@@ -110,7 +118,7 @@
         </div>
 
         <ng-template #passwordsAreNotTheSameBlock>
-          <div *ngIf="loginFormGroup.errors?.['passwordsAreNotTheSame']">
+          <div *ngIf="registrationFG.errors?.['passwordsAreNotTheSame']">
             {{ "PasswordsAreNotSame" | translate }}
           </div>
         </ng-template>
@@ -120,7 +128,7 @@
 
   <button
     data-cy="submit-button-registration"
-    [disabled]="loginFormGroup.invalid"
+    [disabled]="registrationFG.invalid"
   >
     {{ "Registration" | translate }}
   </button>

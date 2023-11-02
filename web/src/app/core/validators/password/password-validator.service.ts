@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class PasswordValidatorService {
     return  passwordMatchWithRegex ? null :  { passwordInvalid: true}
   }
 
-  checkPasswordsAreTheSame(passwordCtrlKey: string, confirmationPasswordCtrlKey: string) {
+  checkPasswordsAreTheSame(passwordCtrlKey: string, confirmationPasswordCtrlKey: string): ValidatorFn {
     return (control: AbstractControl) => {
       const passwordCtrl = control.get(passwordCtrlKey);
       const confirmationPasswordCtrl = control.get(confirmationPasswordCtrlKey);

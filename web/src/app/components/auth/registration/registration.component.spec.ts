@@ -41,7 +41,7 @@ describe('RegistrationComponent', () => {
   });
 
   beforeEach(async () => {
-    component.loginFormGroup.reset();
+    component.registrationFG.reset();
   })
 
   it('should create', () => {
@@ -50,7 +50,7 @@ describe('RegistrationComponent', () => {
 
   describe('Login form group', () => {
     it('should init form group', () => {
-      expect(component.loginFormGroup).toBeTruthy()
+      expect(component.registrationFG).toBeTruthy()
     })
 
     it('should contains firstNameCtrl', () => {
@@ -181,20 +181,21 @@ describe('RegistrationComponent', () => {
     it('should return an error when confirmation password is invalid', () => {
       component.confirmationPasswordCtrl?.patchValue('azert1');
       expect(component.confirmationPasswordCtrl?.hasError('passwordInvalid')).toBeTrue();
-    })
+    });
   })
 
-  describe('loginFormGroup', () => {
+  describe('registrationFG', () => {
     it('should return an error when passwords are not the same', () => {
       component.passwordCtrl?.patchValue('testAZERT124!');
       component.confirmationPasswordCtrl?.patchValue('testAZERT123!');
 
-      expect(component.loginFormGroup?.hasError('passwordsAreNotTheSame')).toBeTrue();
+      expect(component.registrationFG?.hasError('passwordsAreNotTheSame')).toBeTrue();
     })
   })
 
   describe('OnSubmit', () => {
     beforeEach(() => {
+      spyOn(mockStore, 'select').and.callFake(() => of(false))
       component.firstNameCtrl?.patchValue('John')
       component.lastNameCtrl?.patchValue('Doe')
       component.emailCtrl?.patchValue('john.doe@test.com')
@@ -203,7 +204,7 @@ describe('RegistrationComponent', () => {
       fixture.detectChanges();
     })
 
-    it('should disable submit button when loginFormGroup is invalid', () => {
+    it('should disable submit button when registrationFG is invalid', () => {
       component.confirmationPasswordCtrl?.patchValue('Azert')
       fixture.detectChanges();
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
@@ -211,7 +212,7 @@ describe('RegistrationComponent', () => {
       expect(submitBtnEl.nativeElement.disabled).toBeTrue();
     })
 
-    it('should active submit button when loginFormGroup is valid', () => {
+    it('should active submit button when registrationFG is valid', () => {
       const submitBtnEl = fixture.debugElement.query(By.css('[data-cy="submit-button-registration"]'))
 
       expect(submitBtnEl.nativeElement.disabled).toBeFalse();
@@ -221,8 +222,8 @@ describe('RegistrationComponent', () => {
       const dispatchSpy = spyOn(mockStore, 'dispatch');
       const expected = component.getUserFormatted(component.firstNameCtrl, component.lastNameCtrl, component.emailCtrl, component.passwordCtrl)
 
-      const formBtnEl = fixture.debugElement.query(By.css('[data-cy="loginFormGroup-registration"]'))
-      formBtnEl.triggerEventHandler('ngSubmit', null);
+      const formEl = fixture.debugElement.query(By.css('[data-cy="form-group-registration"]'))
+      formEl.triggerEventHandler('ngSubmit', null);
       
       expect(dispatchSpy).toHaveBeenCalledOnceWith(createAccountStart({ payload: expected}))
     })

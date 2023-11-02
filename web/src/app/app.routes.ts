@@ -17,8 +17,12 @@ export const routes: Routes = [
         ]
     },
     {
+        path: PATH_CONFIG.HOME,
+        loadComponent: () => import('./components/home/home.component')
+    },
+    {
         path: "",
-        redirectTo: `${PATH_CONFIG.AUTH}/${PATH_CONFIG.REGISTRATION}`,
+        redirectTo: `${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`,
         pathMatch: 'full'
     }
 ];

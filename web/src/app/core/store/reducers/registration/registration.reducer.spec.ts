@@ -12,7 +12,7 @@ describe('Registration reducer', () => {
 
     describe('emailExists', () => {
         it('should update emailExists state when emailExistsSuccess action is dispatched', () => {
-            const action = RegistrationAction.emailExistsSuccess({ payload: true});
+            const action = RegistrationAction.setEmailExists({ payload: true});
             const newState = registrationReducer(initialState as RegistrationState, action);
 
             expect(newState.emailExists).toBe(true);

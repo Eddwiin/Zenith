@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { UserWithoutId } from '@zenith/core/models/user';
-import { catchError, of } from 'rxjs';
+import { ErrorAPI } from '@zenith/core/models/error-api';
+import { PickUserEmailAndPassword, UserWithoutId } from '@zenith/core/models/user';
+import { LoginSuccessResponse } from '@zenith/core/store/actions/login.action';
+import { catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +12,17 @@ export class AuthService {
   http = inject(HttpClient);
 
   checkEmailExists(email: string) {
-    return this.http.get<boolean>(`api/auth/checkEmailExists?email=${email}`).pipe(
-        catchError(() => of(false))
+    return this.http.get<boolean | ErrorAPI>(`api/auth/checkEmailExists?email=${email}`).pipe(
+        map(isExists => isExists),
+        catchError((err: ErrorAPI) => throwError(() => err)),
       )
   }
 
   createAccount(userToSave: UserWithoutId) {
     return this.http.post<boolean>('api/auth/createAccount', userToSave)
+  }
+
+  login(user: PickUserEmailAndPassword) {
+    return this.http.post<LoginSuccessResponse>('api/auth/login', user);
   }
 }

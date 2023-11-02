@@ -10,7 +10,7 @@ import * as EmailValidator from '@zenith/core/validators/email/email.validator';
 import { PasswordValidatorService } from '@zenith/core/validators/password/password-validator.service';
 import { Subject } from 'rxjs';
 
-const LOGIN_FORM_KEYS = {
+const REGISTRATION_FORM_KEYS = {
   firstNameCtrl: 'firstNameCtrl',
   lastNameCtrl: 'lastNameCtrl',
   emailCtrl: 'emailCtrl',
@@ -53,14 +53,14 @@ export default class RegistrationComponent implements OnInit{
     validators: [Validators.required, this.passwordValidor.checkIfPasswordRegexIsValid]
   })
 
-  loginFormGroup: FormGroup = new FormGroup({
-    [LOGIN_FORM_KEYS.firstNameCtrl]: this.firstNameCtrl,
-    [LOGIN_FORM_KEYS.lastNameCtrl]: this.lastNameCtrl,
-    [LOGIN_FORM_KEYS.emailCtrl]: this.emailCtrl,
-    [LOGIN_FORM_KEYS.passwordCtrl]: this.passwordCtrl,
-    [LOGIN_FORM_KEYS.confirmationPasswordCtrl]: this.confirmationPasswordCtrl
+  registrationFG: FormGroup = new FormGroup({
+    [REGISTRATION_FORM_KEYS.firstNameCtrl]: this.firstNameCtrl,
+    [REGISTRATION_FORM_KEYS.lastNameCtrl]: this.lastNameCtrl,
+    [REGISTRATION_FORM_KEYS.emailCtrl]: this.emailCtrl,
+    [REGISTRATION_FORM_KEYS.passwordCtrl]: this.passwordCtrl,
+    [REGISTRATION_FORM_KEYS.confirmationPasswordCtrl]: this.confirmationPasswordCtrl
   }, {
-    validators: [this.passwordValidor.checkPasswordsAreTheSame(LOGIN_FORM_KEYS.passwordCtrl, LOGIN_FORM_KEYS.confirmationPasswordCtrl)]
+    validators: [this.passwordValidor.checkPasswordsAreTheSame(REGISTRATION_FORM_KEYS.passwordCtrl, REGISTRATION_FORM_KEYS.confirmationPasswordCtrl)]
   })
 
   ngOnInit(){    
@@ -71,10 +71,9 @@ export default class RegistrationComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.loginFormGroup.invalid) return;
-
+    if (this.registrationFG.invalid) return;
+    
     const userToSave = this.getUserFormatted(this.firstNameCtrl, this.lastNameCtrl, this.emailCtrl, this.passwordCtrl);
-
     this.store.dispatch(createAccountStart({ payload: userToSave}))
   }
 
