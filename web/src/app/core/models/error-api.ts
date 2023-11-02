@@ -1,6 +1,7 @@
-export interface ErrorAPI {
+import { HttpErrorResponse } from "@angular/common/http"
+
+export interface ErrorAPI extends HttpErrorResponse  {
     err: {
-        message?: string | null,
-        statusCode?: number
-    }
+        message?: string | null
+    } | null
 }

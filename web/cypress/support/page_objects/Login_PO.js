@@ -17,6 +17,13 @@ class LoginPO extends BasePO {
         cy.get(this.emailSelector).type(email);
     }
 
+    touchEmailInput() {
+        cy.get(this.emailSelector)
+            .invoke('val', '')
+            .focus()
+            .blur()
+    }
+
     typePassword(password) {
         cy.get(this.passwordSelector).type(password);
     }

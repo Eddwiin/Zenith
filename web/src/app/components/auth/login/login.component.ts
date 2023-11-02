@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
 import { PickUserEmailAndPassword } from '@zenith/core/models/user';
 import { loginStart } from '@zenith/core/store/actions/login.action';
 import * as EmailValidator from '@zenith/core/validators/email/email.validator';
@@ -14,7 +15,7 @@ const LOGIN_KEYS = {
 @Component({
   selector: 'zth-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

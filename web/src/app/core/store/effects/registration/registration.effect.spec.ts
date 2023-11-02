@@ -1,6 +1,3 @@
-// import { provideHttpClient } from "@angular/common/http";
-// import { TestBed } from "@angular/core/testing";
-// import { Router, provideRouter } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 import { TestBed } from "@angular/core/testing";
 import { Router, provideRouter } from "@angular/router";
@@ -9,8 +6,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { importTranslateService } from "@zenith/app/app.config";
 import { routes } from "@zenith/app/app.routes";
 import AuthServiceMock from "@zenith/app/shared/tests/services/auth-mock.service";
+import { MockErrorApi } from "@zenith/app/shared/tests/utils/mock-http-response";
 import PATH_CONFIG from "@zenith/core/enums/path.enum";
-import { ErrorAPI } from "@zenith/core/models/error-api";
 import { ToastrError } from "@zenith/core/models/toastr-error";
 import { UserWithoutId } from "@zenith/core/models/user";
 import * as RegistrationActions from "@zenith/core/store/actions/registration.action";
@@ -62,12 +59,11 @@ describe('Registration effect', () => {
         })  
 
         it('should call emailExistsFail action when checkEmailExists return error server', () => {
-            const mockErrorApi: ErrorAPI = {
-                err: {
-                    statusCode: 500
-                }
+            const mockErrorApi: MockErrorApi = {
+                err: null,
+                status: 500
             }
-            
+
             spyOn(authServiceMock, 'checkEmailExists').and.callFake(() => throwError(() => mockErrorApi));
 
             checkEmailExists$(actionsMock$, authServiceMock, translateService).subscribe((action) => {
@@ -140,13 +136,14 @@ describe('Registration effect', () => {
         })
 
         it('should call createAccountFail when there is an error server', () => {
-            const mockErrorResponse: ErrorAPI = { err: 
-                { message: 'test', statusCode: 500} 
+            const mockErrorAPI: MockErrorApi = {
+                err: null,
+                status: 500
             }
-            spyOn(authServiceMock, 'createAccount').and.callFake(() => throwError(() => mockErrorResponse))
+            spyOn(authServiceMock, 'createAccount').and.callFake(() => throwError(() => mockErrorAPI))
 
             createAccount$(actionsMock$, authServiceMock).subscribe(action => {
-                const toastrError: ToastrError = { message: 'test', statusCode: 500 }
+                const toastrError: ToastrError = { message: undefined, statusCode: 500 }
                 expect(action).toEqual(RegistrationActions.createAccountFail({ err: toastrError }))
             })
         })

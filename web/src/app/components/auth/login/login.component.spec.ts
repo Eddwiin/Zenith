@@ -1,7 +1,9 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { importTranslateService } from '@zenith/app/app.config';
 import { PickUserEmailAndPassword } from '@zenith/core/models/user';
 import { loginStart } from '@zenith/core/store/actions/login.action';
 import { registrationReducer } from '@zenith/core/store/reducers/registration/registration.reducer';
@@ -20,7 +22,9 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [LoginComponent],
       providers: [
-        provideMockStore({ initialState })
+        provideMockStore({ initialState }),
+        importTranslateService,
+        provideHttpClient(), 
       ]
     });
     fixture = TestBed.createComponent(LoginComponent);

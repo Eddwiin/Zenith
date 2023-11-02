@@ -24,7 +24,7 @@ export const checkEmailExists$ = createEffect(
                     catchError((errorApi: ErrorAPI) => {
                         const error: ToastrError = {
                             message: errorApi.err?.message || translateService.instant('SomethingWrong'),
-                            statusCode: errorApi.err?.statusCode || 500
+                            statusCode: errorApi.status
                         };
                         return of(RegistrationActions.emailExistsFail({ err: error }))
                     }),
@@ -63,7 +63,7 @@ export const createAccount$ = createEffect(
                         return RegistrationActions.createAccountFail({ err })
                     }),
                     catchError((err: ErrorAPI) => {
-                        const toastrError: ToastrError = { message: err.err?.message, statusCode: 500 }
+                        const toastrError: ToastrError = { message: err.err?.message, statusCode: err.status }
                         return of(RegistrationActions.createAccountFail({ err: toastrError}));
                     })
                 )
@@ -82,8 +82,8 @@ export const createAccountSuccess$ = createEffect(
             ofType(RegistrationActions.createAccountSuccess),
             debounceTime(1000),
             map(() => {
-                const successMessage = translateService.instant('AccountCreated')
-                return ToastrActions.toastrMessageSuccess({ payload: { message: successMessage }})
+                const message = translateService.instant('AccountCreated')
+                return ToastrActions.toastrMessageSuccess({ payload: { message }})
             }),
             tap(() => router.navigateByUrl(`${PATH_CONFIG.AUTH}/${PATH_CONFIG.LOGIN}`))
         ),

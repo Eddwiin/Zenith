@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { ErrorAPI } from '@zenith/core/models/error-api';
 import { PickUserEmailAndPassword, UserWithoutId } from '@zenith/core/models/user';
 import { LoginSuccessResponse } from '@zenith/core/store/actions/login.action';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class AuthService {
   checkEmailExists(email: string) {
     return this.http.get<boolean | ErrorAPI>(`api/auth/checkEmailExists?email=${email}`).pipe(
         map(isExists => isExists),
-        catchError((err: ErrorAPI) => of(true)),
+        catchError((err: ErrorAPI) => throwError(() => err)),
       )
   }
 

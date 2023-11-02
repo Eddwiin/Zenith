@@ -9,7 +9,7 @@ export const LOGIN_ACTIONS = createActionGroup({
     events: {
         loginStart: props<{ payload: PickUserEmailAndPassword }>(),
         loginSuccess: props<{ payload: LoginSuccessResponse }>(),
-        loginFail: props<ToastrError>()
+        loginFail: props<{ err: ToastrError}>()
     }
 })
 

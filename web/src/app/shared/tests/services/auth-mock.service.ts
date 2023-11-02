@@ -18,14 +18,3 @@ export default class AuthServiceMock extends AuthService {
         return of({ token: ''})
     }
 }
-// const authServiceMock = {
-//     /* eslint-disable @typescript-eslint/no-unused-vars */
-//     checkEmailExists: (email: string) => of(false),
-//     /* eslint-disable @typescript-eslint/no-unused-vars */
-//     createAccount: (user: UserWithoutId) => of(true),
-//     /* eslint-disable @typescript-eslint/no-unused-vars */
-//     login: (user: PickUserEmailAndPassword) => of({ token: ''})
-// } as AuthService
-
-
-// export default authServiceMock;

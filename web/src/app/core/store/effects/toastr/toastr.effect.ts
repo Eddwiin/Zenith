@@ -13,7 +13,7 @@ export const toastrMessageSuccess$ = createEffect(
     ) => actions$.pipe(
             ofType(ToastrActions.toastrMessageSuccess),
             tap((action) => {
-                const successTitle = translateService.instant('Succcess');
+                const successTitle = translateService.instant('Success');
                 const successMessage = action.payload.message
                 toastr.success(successMessage, successTitle)
             })
@@ -29,8 +29,8 @@ export const toastrMessageError$ = createEffect(
     ) => actions$.pipe(
         ofType(ToastrActions.toastrMessageError),
         tap((action) => {
-            const errorTitle = translateService.instant('Error');
-            const errorMessage = action.err.message || translateService.instant('SomethingWrong')
+            const errorTitle: string = translateService.instant('Error');
+            const errorMessage: string = action.err.message || translateService.instant('SomethingWrong')
             toastr.error(errorMessage, errorTitle)
         })
     ),
