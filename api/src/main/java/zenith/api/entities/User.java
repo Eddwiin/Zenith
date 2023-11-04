@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @Entity
 public class User {
-
     @Id
     private String id;
 
