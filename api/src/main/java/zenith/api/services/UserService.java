@@ -6,5 +6,5 @@ import zenith.api.exceptions.emails.EmailIsNullException;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> findByEmail(String emailMock) throws EmailIsNullException;
+    Optional<User> findByEmail(String email) throws EmailIsNullException;
 }

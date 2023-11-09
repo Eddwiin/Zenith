@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
@@ -12,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User {
     @Id
     private String id;
+    private String email;
 
-    public User() {
-
-    }
 }
